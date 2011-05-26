@@ -17,7 +17,8 @@ import org.xml.sax.SAXException;
 public class WeatherXML {
 
 	//No generics
-	List myEmpls;
+	// ArrayList myEmpls;
+	WeatherForecastInfo wfi;
 	Document dom;
 
 
@@ -33,10 +34,6 @@ public class WeatherXML {
 		
 		//get each employee element and create a Employee object
 		parseDocument();
-		
-		//Iterate through the list and print the data
-		printData();
-		
 	}
 	
 	
@@ -50,7 +47,7 @@ public class WeatherXML {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			
 			//parse using builder to get DOM representation of the XML file
-			dom = db.parse("employees.xml");
+			dom = db.parse("http://www.google.com/ig/api?weather=02130");
 			
 
 		}catch(ParserConfigurationException pce) {
@@ -139,21 +136,6 @@ public class WeatherXML {
 		//in production application you would catch the exception
 		return Integer.parseInt(getTextValue(ele,tagName));
 	}
-	
-	/**
-	 * Iterate through the list and print the 
-	 * content to console
-	 */
-	private void printData(){
-		
-		System.out.println("No of Employees '" + myEmpls.size() + "'.");
-		
-		Iterator it = myEmpls.iterator();
-		while(it.hasNext()) {
-			System.out.println(it.next().toString());
-		}
-	}
-
 	
 	public static void main(String[] args){
 		//create an instance

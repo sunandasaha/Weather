@@ -9,6 +9,7 @@ public class Weather extends Activity {
 	// "http://www.google.com/ig/api?weather=" + zipcode/city name
 	// http://www.rssweather.com/zipcode/02130/wx.php
 	// http://www.rssweather.com/zipcode/02447/rss.php
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

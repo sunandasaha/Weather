@@ -1,6 +1,7 @@
 package weather.jinn.com;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,10 +74,20 @@ public class WeatherForecastInfo {
 					this.longitude = Double.parseDouble(elem.getAttribute("data"));
 				}
 				else if(elemTagName == "forecast_date") {
-					this.forecast_date = (Date)formatter.parse(elem.getAttribute("data"));
+					try {
+						this.forecast_date = (Date)formatter.parse(elem.getAttribute("data"));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else if(elemTagName == "current_time") {
-					this.current_time = (Date)formatter.parse(elem.getAttribute("data"));
+					try {
+						this.current_time = (Date)formatter.parse(elem.getAttribute("data"));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else if(elemTagName == "unit_system") {
 					this.unit_system = elem.getAttribute("data");

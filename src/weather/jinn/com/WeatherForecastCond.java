@@ -10,9 +10,8 @@ public class WeatherForecastCond {
 	int low, high;
 	
 	public ArrayList<WeatherForecastCond> nlToWFC(NodeList nl){
-		WeatherForecastCond wfc = new WeatherForecastCond();
-		
 		ArrayList<WeatherForecastCond> ret_wfc = new ArrayList<WeatherForecastCond>();
+		WeatherForecastCond wfc = new WeatherForecastCond();
 		
 		for (int x = 0; x < nl.getLength(); x++){
 			Element elem = (Element)nl.item(x);

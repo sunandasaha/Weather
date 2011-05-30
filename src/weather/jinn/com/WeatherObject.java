@@ -32,7 +32,7 @@ public class WeatherObject {
 	};
 
 	// Methods
-	/*	
+	/*	parse_gWeather_XmlFile
 	 *
 	 */
 	private void parse_gWeather_XmlFile(){
@@ -55,9 +55,7 @@ public class WeatherObject {
 			wcc.nlToWCC(nlCurrentCond);
 
 			NodeList nlForecastCond = root.getElementsByTagName("forecast_conditions");
-			for (int x = 0; x < nlForecastCond.getLength(); x++){				
-				nlForecastCond.item(x);
-			}
+			// wfc.nlToWFC(nlForecastCond);
 			
 		} catch(ParserConfigurationException pce) {
 			pce.printStackTrace();

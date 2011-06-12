@@ -1,0 +1,1 @@
+declare -x GIT_SSH="C:\Program Files\Git\bin\ssh.exe"

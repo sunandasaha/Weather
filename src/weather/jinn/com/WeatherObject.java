@@ -17,6 +17,8 @@ public class WeatherObject {
 	public final String gWeather_URL = "http://www.google.com/ig/api?weather=" + location_String;
 	public final String rssWeather_URL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
 	
+	String TestURL = "http://www.google.com/ig/api?weather=02130";
+	
 	// Forecast Information
 	WeatherForecastInfo wfi = new WeatherForecastInfo();
 	
@@ -45,7 +47,7 @@ public class WeatherObject {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 	
 			//parse using builder to get DOM representation of the XML file
-			Document dom = db.parse("http://www.google.com/ig/api?weather=02130");
+			Document dom = db.parse(TestURL);
 			Element root = dom.getDocumentElement();
 			
 			NodeList nlForecastInfo = root.getElementsByTagName("forecast_information");

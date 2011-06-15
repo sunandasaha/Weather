@@ -6,48 +6,28 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class WeatherForecastCond {
+	String day_of_week, iconImgLocation, condition;
+	int low, high;
+	
 	public String getDay_of_week() {
 		return day_of_week;
-	}
-
-	public void setDay_of_week(String day_of_week) {
-		this.day_of_week = day_of_week;
 	}
 
 	public String getIconImgLocation() {
 		return iconImgLocation;
 	}
 
-	public void setIconImgLocation(String iconImgLocation) {
-		this.iconImgLocation = iconImgLocation;
-	}
-
 	public String getCondition() {
 		return condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = condition;
 	}
 
 	public int getLow() {
 		return low;
 	}
 
-	public void setLow(int low) {
-		this.low = low;
-	}
-
 	public int getHigh() {
 		return high;
 	}
-
-	public void setHigh(int high) {
-		this.high = high;
-	}
-
-	String day_of_week, iconImgLocation, condition;
-	int low, high;
 	
 	public ArrayList<WeatherForecastCond> nlToWFC(NodeList nl){
 		ArrayList<WeatherForecastCond> ret_wfc = new ArrayList<WeatherForecastCond>();

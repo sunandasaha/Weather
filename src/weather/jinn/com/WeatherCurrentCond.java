@@ -4,57 +4,33 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class WeatherCurrentCond {
+	String condition_data, humidity, icon, wind_condition;
+	int temp_f, temp_c;
+	
 	public String getCondition_data() {
 		return condition_data;
-	}
-
-	public void setCondition_data(String condition_data) {
-		this.condition_data = condition_data;
 	}
 
 	public String getHumidity() {
 		return humidity;
 	}
 
-	public void setHumidity(String humidity) {
-		this.humidity = humidity;
-	}
-
 	public String getIcon() {
 		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
 	}
 
 	public String getWind_condition() {
 		return wind_condition;
 	}
 
-	public void setWind_condition(String wind_condition) {
-		this.wind_condition = wind_condition;
-	}
-
 	public int getTemp_f() {
 		return temp_f;
-	}
-
-	public void setTemp_f(int temp_f) {
-		this.temp_f = temp_f;
 	}
 
 	public int getTemp_c() {
 		return temp_c;
 	}
 
-	public void setTemp_c(int temp_c) {
-		this.temp_c = temp_c;
-	}
-
-	String condition_data, humidity, icon, wind_condition;
-	int temp_f, temp_c;
-	
 	public WeatherCurrentCond nlToWCC(NodeList nl){
 		WeatherCurrentCond ret_wcc = new WeatherCurrentCond();
 		
@@ -80,5 +56,3 @@ public class WeatherCurrentCond {
 		return ret_wcc;
 	}
 }
-
-// a whole bunch of get/set methods for  this class

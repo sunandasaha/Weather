@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/InputLinearLayout" android:layout_height="wrap_content" android:layout_width="match_parent">
         <EditText android:text="Enter Location" android:id="@+id/location_String_editText" android:layout_width="wrap_content" android:layout_height="wrap_content"></EditText>
         <Button android:text="Go" android:id="@+id/go" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
         <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/progressBar1"></ProgressBar>
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout3" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/DateTimeTextView" android:layout_width="fill_parent" android:text="Time: " android:layout_height="wrap_content"></TextView>
-        <TextView android:id="@+id/DayofWeekTextView" android:layout_width="fill_parent" android:text="Day of Week: " android:layout_height="wrap_content"></TextView>
-        <TextView android:id="@+id/LocationtextView" android:layout_width="fill_parent" android:text="Location: " android:layout_height="wrap_content"></TextView>
+    <LinearLayout android:id="@+id/LocationLinearLayout" android:layout_height="wrap_content" android:layout_width="match_parent">
+		<TextView android:id="@+id/DateTimeTextView" android:layout_width="wrap_content" android:text="Time: " android:layout_height="wrap_content"></TextView>
+		<TextView android:id="@+id/DayofWeekTextView" android:layout_width="wrap_content" android:text="Day of Week: " android:layout_height="wrap_content"></TextView>
+		<TextView android:id="@+id/LocationTextView" android:layout_width="wrap_content" android:text="Location: " android:layout_height="wrap_content"></TextView>
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:orientation="vertical">
-        <ImageView android:id="@+id/imageView1" android:src="@drawable/icon" android:layout_width=wrap_content android:layout_height="wrap_content"></ImageView>
-        <TextView android:id="@+id/ConditionTextView" android:layout_width="fill_parent" android:text="Condition: " android:layout_height="wrap_content"></TextView>
-        <TextView android:id="@+id/HighLowTextView" android:layout_width="fill_parent" android:text="High/Low: " android:layout_height="wrap_content"></TextView>
-        <TextView android:id="@+id/HumidityTextView" android:layout_width="fill_parent" android:text="Humidity: " android:layout_height="wrap_content"></TextView>
-        <TextView android:id="@+id/WindTextView" android:layout_width="fill_parent" android:text="Wind: " android:layout_height="wrap_content"></TextView>
+    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/CurrentConditionLinearLayout" android:layout_height="wrap_content">
+		<ImageView android:id="@+id/ConditionIconImageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/CurrentConditionTextLinearLayout" android:layout_height="wrap_content">
+			<TextView android:id="@+id/ConditionTextView" android:layout_width="wrap_content" android:text="Condition: " android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/HighLowTextView" android:layout_width="wrap_content" android:text="High/Low: " android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/HumidityTextView" android:layout_width="wrap_content" android:text="Humidity: " android:layout_height="wrap_content"></TextView>
+	        <TextView android:id="@+id/WindTextView" android:layout_width="wrap_content" android:text="Wind: " android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
     </LinearLayout>
 </LinearLayout>

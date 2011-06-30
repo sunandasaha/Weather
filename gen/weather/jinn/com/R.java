@@ -14,17 +14,19 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int ConditionTextView=0x7f050009;
-        public static final int DateTimeTextView=0x7f050006;
-        public static final int DayofWeekTextView=0x7f050007;
-        public static final int HighLowTextView=0x7f05000a;
-        public static final int HumidityTextView=0x7f05000b;
-        public static final int LocationtextView=0x7f050008;
-        public static final int WindTextView=0x7f05000c;
+        public static final int ConditionIconImageView=0x7f050009;
+        public static final int ConditionTextView=0x7f05000b;
+        public static final int CurrentConditionLinearLayout=0x7f050008;
+        public static final int CurrentConditionTextLinearLayout=0x7f05000a;
+        public static final int DateTimeTextView=0x7f050005;
+        public static final int DayofWeekTextView=0x7f050006;
+        public static final int HighLowTextView=0x7f05000c;
+        public static final int HumidityTextView=0x7f05000d;
+        public static final int InputLinearLayout=0x7f050000;
+        public static final int LocationLinearLayout=0x7f050004;
+        public static final int LocationTextView=0x7f050007;
+        public static final int WindTextView=0x7f05000e;
         public static final int go=0x7f050002;
-        public static final int imageView1=0x7f050005;
-        public static final int linearLayout1=0x7f050000;
-        public static final int linearLayout2=0x7f050004;
         public static final int location_String_editText=0x7f050001;
         public static final int progressBar1=0x7f050003;
     }

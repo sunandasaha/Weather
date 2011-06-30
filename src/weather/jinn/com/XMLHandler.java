@@ -30,10 +30,10 @@ public class XMLHandler extends DefaultHandler {
 			/** Start */ 
 			weather = new WeatherObject();
 		} 
-		else if (localName.equals("website")) {
+		else if (localName.equals("city")) {
 			/** Get attribute value */
 			String attr = attributes.getValue("data");
-			weather.setCategory(attr);
+			weather.setCity(attr);
 		}
 
 	}
@@ -50,7 +50,7 @@ public class XMLHandler extends DefaultHandler {
 		if (localName.equalsIgnoreCase("city"))
 			weather.setCity(currentValue);
 		else if (localName.equalsIgnoreCase("postal_code"))
-			weather.setPostalCode(currentValue);
+			weather.setPostal_code(currentValue);
 
 	}
 

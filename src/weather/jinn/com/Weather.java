@@ -44,7 +44,12 @@ public class Weather extends Activity {
 			xr.parse(new InputSource(sourceUrl.openStream()));
 			
 		} catch (Exception e) {
-			System.out.println("XML Pasing Excpetion = " + e);
+			System.out.println("XML Parsing Exception = " + e);
 		}
+		
+		/** Get result from MyXMLHandler SitlesList Object */
+		wo = XMLHandler.weather;
+		
+		// setTxt
     }
 }

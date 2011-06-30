@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 public class WeatherObject {
 	String location_String = "02130";
 	
+	// Forecast Information
 	String city, postal_code;
 	double latitude, longitude;
 	Date forecast_date, current_time;
@@ -33,44 +34,8 @@ public class WeatherObject {
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 	
 	// constructors
-	WeatherObject(){
-		// parse_gWeather_XmlFile();
-	};
+	WeatherObject(){};
 
-	// Methods
-	/*	parse_gWeather_XmlFile
-	 *
-	 */
-	public WeatherObject parse_gWeather_XmlFile(){
-
-		//get the factory
-		WeatherObject wo = new WeatherObject();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		
-		try {			
-			//Using factory get an instance of document builder
-			DocumentBuilder db = dbf.newDocumentBuilder();
-	
-			//parse using builder to get DOM representation of the XML file
-			Document dom = db.parse(gWeather_URL);
-			Element root = dom.getDocumentElement();
-			
-			NodeList nlCurrentCond = root.getElementsByTagName("current_conditions");
-			wo.wcc.nlToWCC(nlCurrentCond);
-
-			NodeList nlForecastCond = root.getElementsByTagName("forecast_conditions");
-			// wfc.nlToWFC(nlForecastCond);
-			
-		} catch(ParserConfigurationException pce) {
-			pce.printStackTrace();
-		} catch(SAXException se) {
-			se.printStackTrace();
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		}
-		return wo;
-	}
-	
 	public String getLocation_String() {
 		return location_String;
 	}
@@ -191,7 +156,7 @@ public class WeatherObject {
 		this.formatter = formatter;
 	}
 
-	public WeatherForecastInfo nlToWFI(NodeList nl){
+	/** public WeatherForecastInfo nlToWFI(NodeList nl){
 		WeatherForecastInfo ret_wfi = new WeatherForecastInfo();
 		
 		for (int x = 0; x < nl.getLength(); x++){
@@ -231,4 +196,34 @@ public class WeatherObject {
 		}
 		return ret_wfi;
 	}
+	
+	public WeatherObject parse_gWeather_XmlFile(){
+
+		//get the factory
+		WeatherObject wo = new WeatherObject();
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		
+		try {			
+			//Using factory get an instance of document builder
+			DocumentBuilder db = dbf.newDocumentBuilder();
+	
+			//parse using builder to get DOM representation of the XML file
+			Document dom = db.parse(gWeather_URL);
+			Element root = dom.getDocumentElement();
+			
+			NodeList nlCurrentCond = root.getElementsByTagName("current_conditions");
+			wo.wcc.nlToWCC(nlCurrentCond);
+
+			NodeList nlForecastCond = root.getElementsByTagName("forecast_conditions");
+			// wfc.nlToWFC(nlForecastCond);
+			
+		} catch(ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch(SAXException se) {
+			se.printStackTrace();
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return wo;
+	} **/
 }

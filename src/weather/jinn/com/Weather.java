@@ -51,5 +51,8 @@ public class Weather extends Activity {
 		wo = XMLHandler.weather;
 		
 		// setTxt
+		TextView LocationTextView;
+		LocationTextView = (TextView) findViewById(R.id.LocationTextView); 
+	    LocationTextView.setText((CharSequence)wo.getCity());
     }
 }

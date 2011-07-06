@@ -35,6 +35,11 @@ public class XMLHandler extends DefaultHandler {
 			String attr = attributes.getValue("data");
 			weather.setCity(attr);
 		}
+		else if (localName.equals("postal_code")) {
+			/** Get attribute value */
+			String attr = attributes.getValue("data");
+			weather.setPostal_code(attr);
+		}
 
 	}
 

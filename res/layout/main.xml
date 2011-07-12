@@ -7,7 +7,6 @@
     </LinearLayout>
     <LinearLayout android:id="@+id/LocationLinearLayout" android:layout_height="wrap_content" android:layout_width="match_parent">
 		<TextView android:id="@+id/DateTimeTextView" android:layout_width="wrap_content" android:text="Time: " android:layout_height="wrap_content"></TextView>
-		<TextView android:id="@+id/DayofWeekTextView" android:layout_width="wrap_content" android:text="Day of Week: " android:layout_height="wrap_content"></TextView>
 		<TextView android:id="@+id/LocationTextView" android:layout_width="wrap_content" android:text="Location: " android:layout_height="wrap_content"></TextView>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/CurrentConditionLinearLayout" android:layout_height="wrap_content">

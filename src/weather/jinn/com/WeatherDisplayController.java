@@ -3,7 +3,7 @@ package weather.jinn.com;
 import android.widget.TextView;
 
 public class WeatherDisplayController {
-	public void updateDisplay(WeatherObject wo){
+	public static void updateDisplay(WeatherObject wo){
 		// display the WeatherCurrentConditions object from wo 
 
 	    TextView DateTimeTextView;

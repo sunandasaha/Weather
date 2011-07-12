@@ -1,37 +1,22 @@
 package weather.jinn.com;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 public class WeatherObject {
-	String location_String = "02130";
+	private String location_String = "02130";
 	
 	// Forecast Information
-	String city, postal_code;
-	double latitude, longitude;
-	Date forecast_date, current_time;
-	String unit_system;
+	public String city, postal_code, unit_system;
+	public double latitude, longitude;
+	public Date forecast_date, current_time;
 	
 	// Current Conditions
-	String condition_data, humidity, icon, wind_condition;
-	int temp_f, temp_c;
+	public String condition_data, humidity, icon, wind_condition;
+	public int temp_f, temp_c;
 	
 	// Forecast Conditions array
-	ArrayList<WeatherForecastCond> wfc = new ArrayList<WeatherForecastCond>();
-	
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+	public ArrayList<WeatherForecastCond> wfc = new ArrayList<WeatherForecastCond>();
 	
 	// constructors
 	WeatherObject(){};
@@ -147,83 +132,4 @@ public class WeatherObject {
 	public void setTemp_c(int temp_c) {
 		this.temp_c = temp_c;
 	}
-
-	public SimpleDateFormat getFormatter() {
-		return formatter;
-	}
-
-	public void setFormatter(SimpleDateFormat formatter) {
-		this.formatter = formatter;
-	}
-
-	/** public WeatherForecastInfo nlToWFI(NodeList nl){
-		WeatherForecastInfo ret_wfi = new WeatherForecastInfo();
-		
-		for (int x = 0; x < nl.getLength(); x++){
-			Element elem = (Element)nl.item(x);
-			String elemTagName = elem.getTagName();
-			if (elemTagName == "city") {
-				ret_wfi.city = elem.getAttribute("data");
-			}
-			else if (elemTagName == "postal_code") {
-				ret_wfi.postal_code = elem.getAttribute("data");
-			}
-			else if(elemTagName == "latitude") {
-				ret_wfi.latitude = Double.parseDouble(elem.getAttribute("data"));
-			}
-			else if(elemTagName == "longitude") {
-				ret_wfi.longitude = Double.parseDouble(elem.getAttribute("data"));
-			}
-			else if(elemTagName == "forecast_date") {
-				try {
-					ret_wfi.forecast_date = (Date)formatter.parse(elem.getAttribute("data"));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else if(elemTagName == "current_time") {
-				try {
-					ret_wfi.current_time = (Date)formatter.parse(elem.getAttribute("data"));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else if(elemTagName == "unit_system") {
-				ret_wfi.unit_system = elem.getAttribute("data");
-			}
-		}
-		return ret_wfi;
-	}
-	
-	public WeatherObject parse_gWeather_XmlFile(){
-
-		//get the factory
-		WeatherObject wo = new WeatherObject();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		
-		try {			
-			//Using factory get an instance of document builder
-			DocumentBuilder db = dbf.newDocumentBuilder();
-	
-			//parse using builder to get DOM representation of the XML file
-			Document dom = db.parse(gWeather_URL);
-			Element root = dom.getDocumentElement();
-			
-			NodeList nlCurrentCond = root.getElementsByTagName("current_conditions");
-			wo.wcc.nlToWCC(nlCurrentCond);
-
-			NodeList nlForecastCond = root.getElementsByTagName("forecast_conditions");
-			// wfc.nlToWFC(nlForecastCond);
-			
-		} catch(ParserConfigurationException pce) {
-			pce.printStackTrace();
-		} catch(SAXException se) {
-			se.printStackTrace();
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		}
-		return wo;
-	} **/
 }

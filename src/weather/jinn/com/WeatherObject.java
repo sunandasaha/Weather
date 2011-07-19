@@ -9,7 +9,7 @@ public class WeatherObject {
 	// Forecast Information
 	public String city, postal_code, unit_system;
 	public double latitude, longitude;
-	public Date forecast_date, current_time;
+	public Date forecast_date, current_date_time;
 	
 	// Current Conditions
 	public String condition_data, humidity, icon, wind_condition;
@@ -69,12 +69,12 @@ public class WeatherObject {
 		this.forecast_date = forecast_date;
 	}
 
-	public Date getCurrent_time() {
-		return current_time;
+	public Date getCurrent_date_time() {
+		return current_date_time;
 	}
 
-	public void setCurrent_time(Date current_time) {
-		this.current_time = current_time;
+	public void setCurrent_date_time(Date current_date_time) {
+		this.current_date_time = current_date_time;
 	}
 
 	public String getUnit_system() {

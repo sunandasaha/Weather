@@ -1,6 +1,11 @@
 package weather.jinn.com;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +17,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Weather extends Activity {
@@ -21,11 +29,10 @@ public class Weather extends Activity {
 	
 	WeatherObject wo = new WeatherObject();
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
-    
+
     Date date = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("E");
     
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,27 +60,70 @@ public class Weather extends Activity {
 		
 		wo = myXMLHandler.getWeatherObject();
 		
-		// setTxt
-		TextView LocationTextView, DateTimeTextView, ConditionTextView, HighLowTextView, 
-			HumidityTextView, WindTextView;
-		
-		LocationTextView = (TextView) findViewById(R.id.LocationTextView);
-		LocationTextView.setText((CharSequence)wo.getCity());
-		
-		DateTimeTextView = (TextView) findViewById(R.id.DateTimeTextView);
-		DateTimeTextView.setText((CharSequence)sdf.format(date).toString() + ", " + currentDateTimeString);
-		
-		ConditionTextView = (TextView) findViewById(R.id.ConditionTextView);
-		ConditionTextView.setText((CharSequence)wo.getCondition_data());
-		
-		HighLowTextView = (TextView) findViewById(R.id.HighLowTextView);
-		HighLowTextView.setText(Integer.toString(wo.getTemp_f())+ " F");
-		
-		HumidityTextView = (TextView) findViewById(R.id.HumidityTextView);
-		HumidityTextView.setText((CharSequence)wo.getHumidity());
-		
-		WindTextView = (TextView) findViewById(R.id.WindTextView);
-		WindTextView.setText((CharSequence)(wo.getWind_condition()));
-
+		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
+		if (wo != null) {
+			// setTxt
+			TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, TempFCTextView,
+				HumidityTextView, WindTextView;
+			ImageView ConditionIconImageView;
+			TextView ForecastIconImageView[] = null;
+			TextView ForecastDoWTextView[] = null;
+			TextView ForecastConditionTextView[] = null;
+			TextView ForecastHLTextView[] = null;
+			
+			SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
+			
+			LocationTextView = (TextView) findViewById(R.id.LocationTextView);
+			LocationTextView.setText((CharSequence)wo.getCity());
+			
+			CurrentDateTimeTextView = (TextView) findViewById(R.id.CurrentDateTimeTextView);
+			CurrentDateTimeTextView.setText((CharSequence)CurrentDateTimeDisplayFormat.format(wo.getCurrent_date_time()));
+			
+			ConditionTextView = (TextView) findViewById(R.id.ConditionTextView);
+			ConditionTextView.setText((CharSequence)wo.getCondition_data());
+			
+			TempFCTextView = (TextView) findViewById(R.id.TempFCTextView);
+			TempFCTextView.setText(Integer.toString(wo.getTemp_f())+ "°F" + "/" + Integer.toString(wo.getTemp_c())+ "°C");
+			
+			HumidityTextView = (TextView) findViewById(R.id.HumidityTextView);
+			HumidityTextView.setText((CharSequence)wo.getHumidity());
+	
+			URL ConditionIconImageViewURL = null;
+			try {
+				ConditionIconImageViewURL = new URL("http://www.google.com" + wo.getIcon());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ConditionIconImageView = (ImageView) findViewById(R.id.ConditionIconImageView);
+			ConditionIconImageView.setImageBitmap(getImagefromURL(ConditionIconImageViewURL));
+			
+			WindTextView = (TextView) findViewById(R.id.WindTextView);
+			WindTextView.setText((CharSequence)(wo.getWind_condition()));
+			
+			for (int x = 0; x < wo.wfc.size(); x++){
+				ForecastIconImageView[x] = (TextView) findViewById(R.id.ForecastIconImageView);
+				ForecastIconImageView[x].setText(wo.wfc.get(x).getIconImgPath());
+			}
+		}
+		else{
+			Log.v("WeatherAPP", "wo empty again...");
+		}
+    }
+    
+	public Bitmap getImagefromURL(URL imageURL){
+        Bitmap bm = null; 
+        try { 
+            URLConnection conn = imageURL.openConnection(); 
+            conn.connect(); 
+            InputStream is = conn.getInputStream(); 
+            BufferedInputStream bis = new BufferedInputStream(is); 
+            bm = BitmapFactory.decodeStream(bis); 
+            bis.close(); 
+            is.close(); 
+       } catch (IOException e) { 
+           Log.e("WeatherAPP", "Error getting bitmap", e); 
+       } 
+       return bm; 
     }
 }

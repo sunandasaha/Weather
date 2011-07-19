@@ -1,16 +1,40 @@
 package weather.jinn.com;
 
+import java.text.SimpleDateFormat;
+
+import android.net.Uri;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 public class WeatherDisplayController {
 	public static void updateDisplay(WeatherObject wo){
-		// display the WeatherCurrentConditions object from wo 
-
-	    TextView DateTimeTextView;
-	    // DateTimeTextView = (TextView) findViewById(R.id.DateTimeTextView); 
-	    // DateTimeTextView.setText((CharSequence)wo.wfi.current_time);
+		/*TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, HighLowTextView, 
+			HumidityTextView, WindTextView;
+		ImageView ConditionIconImageView; 
 		
-		// display the WeatherForecastInfo object from wo
-		// display the WeatherForecastCond from wo
+		SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-mm-dd HH:mm");
+		
+		LocationTextView = (TextView) findViewById(R.id.LocationTextView);
+		LocationTextView.setText((CharSequence)wo.getCity()); 
+		
+		CurrentDateTimeTextView = (TextView) findViewById(R.id.CurrentDateTimeTextView);
+		CurrentDateTimeTextView.setText((CharSequence)CurrentDateTimeDisplayFormat.format(wo.getCurrent_date_time()));
+		
+		ConditionTextView = (TextView) findViewById(R.id.ConditionTextView);
+		ConditionTextView.setText((CharSequence)wo.getCondition_data());
+		
+		HighLowTextView = (TextView) findViewById(R.id.HighLowTextView);
+		HighLowTextView.setText(Integer.toString(wo.getTemp_f())+ " F");
+		
+		HumidityTextView = (TextView) findViewById(R.id.HumidityTextView);
+		HumidityTextView.setText((CharSequence)wo.getHumidity());
+
+		Uri ConditionIconImageViewURI = Uri.parse("http://www.google.com" + wo.getIcon());
+		ConditionIconImageView = (ImageView) findViewById(R.id.ConditionIconImageView);
+		ConditionIconImageView.setImageURI(ConditionIconImageViewURI);
+		
+		WindTextView = (TextView) findViewById(R.id.WindTextView);
+		WindTextView.setText((CharSequence)(wo.getWind_condition()));*/
 	}
 }

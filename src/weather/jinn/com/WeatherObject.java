@@ -16,7 +16,7 @@ public class WeatherObject {
 	public int temp_f, temp_c;
 	
 	// Forecast Conditions array
-	public ArrayList<WeatherForecastCond> wfc = new ArrayList<WeatherForecastCond>();
+	public ArrayList<WeatherForecastCond> wfc = new ArrayList<WeatherForecastCond>(4);
 	
 	// constructors
 	WeatherObject(){};

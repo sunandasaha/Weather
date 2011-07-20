@@ -66,7 +66,7 @@ public class Weather extends Activity {
 			TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, TempFCTextView,
 				HumidityTextView, WindTextView;
 			ImageView ConditionIconImageView;
-			TextView ForecastIconImageView[] = null;
+			ImageView ForecastIconImageView[] = null;
 			TextView ForecastDoWTextView[] = null;
 			TextView ForecastConditionTextView[] = null;
 			TextView ForecastHLTextView[] = null;
@@ -101,9 +101,27 @@ public class Weather extends Activity {
 			WindTextView = (TextView) findViewById(R.id.WindTextView);
 			WindTextView.setText((CharSequence)(wo.getWind_condition()));
 			
+			URL ForecastIconImageViewURL = null;
+			
+			
 			for (int x = 0; x < wo.wfc.size(); x++){
-				ForecastIconImageView[x] = (TextView) findViewById(R.id.ForecastIconImageView);
-				ForecastIconImageView[x].setText(wo.wfc.get(x).getIconImgPath());
+				try {
+					ForecastIconImageViewURL = new URL ("http://www.google.com" + wo.wfc.get(x).getIconImgPath());
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				ForecastIconImageView[x] = (ImageView) findViewById(R.id.ForecastIconImageView);
+				ForecastIconImageView[x].setImageBitmap(getImagefromURL(ForecastIconImageViewURL));
+				
+				ForecastDoWTextView[x] = (TextView) findViewById(R.id.ForecastDoWTextView);
+				ForecastDoWTextView[x].setText(wo.wfc.get(x).getDay_of_week());
+				
+				ForecastConditionTextView[x] = (TextView) findViewById(R.id.ForecastConditionTextView);
+				ForecastConditionTextView[x].setText(wo.wfc.get(x).getCondition());
+				
+				ForecastHLTextView[x] = (TextView) findViewById(R.id.ForecastHLTextView);
+				ForecastHLTextView[x].setText("L:" + wo.wfc.get(x).getLow() + " H:" + wo.wfc.get(x).getHigh());
 			}
 		}
 		else{

@@ -1,6 +1,5 @@
 package weather.jinn.com;
 
-
 public class WeatherForecastCond {
 	String day_of_week, iconImgPath, condition;
 	int low, high;

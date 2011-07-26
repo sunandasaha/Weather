@@ -19,12 +19,36 @@
 		</LinearLayout>
     </LinearLayout>
     
-    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
-		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout" android:layout_height="wrap_content">
-			<TextView android:id="@+id/ForecastDoWTextView" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-			<TextView android:id="@+id/ForecastConditionTextView" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-			<TextView android:id="@+id/ForecastHLTextView" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout0" android:layout_height="wrap_content">
+		<ImageView android:id="@+id/ForecastIconImageView0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout0" android:layout_height="wrap_content">
+			<TextView android:id="@+id/ForecastDoWTextView0" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastConditionTextView0" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastHLTextView0" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
+    </LinearLayout>		
+    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout1" android:layout_height="wrap_content">
+		<ImageView android:id="@+id/ForecastIconImageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout1" android:layout_height="wrap_content">
+			<TextView android:id="@+id/ForecastDoWTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastConditionTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastHLTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout2" android:layout_height="wrap_content">
+		<ImageView android:id="@+id/ForecastIconImageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout2" android:layout_height="wrap_content">
+			<TextView android:id="@+id/ForecastDoWTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastConditionTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastHLTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout3" android:layout_height="wrap_content">
+		<ImageView android:id="@+id/ForecastIconImageView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout3" android:layout_height="wrap_content">
+			<TextView android:id="@+id/ForecastDoWTextView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastConditionTextView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/ForecastHLTextView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 		</LinearLayout>
     </LinearLayout>
 </LinearLayout>

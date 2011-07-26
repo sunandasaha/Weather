@@ -29,7 +29,35 @@ public class Weather extends Activity {
 	
 	WeatherObject wo = new WeatherObject();
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
+    
+    private static final int[] ForecastIconImageViews = {
+        R.id.ForecastIconImageView0,
+        R.id.ForecastIconImageView1,
+        R.id.ForecastIconImageView2,
+        R.id.ForecastIconImageView3
+    };
+    
+    private static final int[] ForecastDoWTextViews = {
+        R.id.ForecastDoWTextView0,
+        R.id.ForecastDoWTextView1,
+        R.id.ForecastDoWTextView2,
+        R.id.ForecastDoWTextView3
+    };
+    
+    private static final int[] ForecastConditionTextViews = {
+        R.id.ForecastConditionTextView0,
+        R.id.ForecastConditionTextView1,
+        R.id.ForecastConditionTextView2,
+        R.id.ForecastConditionTextView3
+    };
 
+    private static final int[] ForecastHLTextViews = {
+        R.id.ForecastHLTextView0,
+        R.id.ForecastHLTextView1,
+        R.id.ForecastHLTextView2,
+        R.id.ForecastHLTextView3
+    };
+    
     Date date = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("E");
     
@@ -66,11 +94,7 @@ public class Weather extends Activity {
 			TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, TempFCTextView,
 				HumidityTextView, WindTextView;
 			ImageView ConditionIconImageView;
-			ImageView ForecastIconImageView[] = null;
-			TextView ForecastDoWTextView[] = null;
-			TextView ForecastConditionTextView[] = null;
-			TextView ForecastHLTextView[] = null;
-			
+
 			SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
 			
 			LocationTextView = (TextView) findViewById(R.id.LocationTextView);
@@ -103,24 +127,29 @@ public class Weather extends Activity {
 			
 			URL ForecastIconImageViewURL = null;
 			
-			
+			ImageView ForecastIconImageView[] = new ImageView[4];
+			TextView ForecastDoWTextView[] = new TextView[4];
+			TextView ForecastConditionTextView[] = new TextView[4];
+			TextView ForecastHLTextView[] = new TextView[4];			
 			for (int x = 0; x < wo.wfc.size(); x++){
+			// for (int x = 0; x < 1; x++){
 				try {
 					ForecastIconImageViewURL = new URL ("http://www.google.com" + wo.wfc.get(x).getIconImgPath());
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				ForecastIconImageView[x] = (ImageView) findViewById(R.id.ForecastIconImageView);
+				
+				ForecastIconImageView[x] = (ImageView) findViewById(ForecastIconImageViews[x]);
 				ForecastIconImageView[x].setImageBitmap(getImagefromURL(ForecastIconImageViewURL));
 				
-				ForecastDoWTextView[x] = (TextView) findViewById(R.id.ForecastDoWTextView);
+				ForecastDoWTextView[x] = (TextView) findViewById(ForecastDoWTextViews[x]);
 				ForecastDoWTextView[x].setText(wo.wfc.get(x).getDay_of_week());
 				
-				ForecastConditionTextView[x] = (TextView) findViewById(R.id.ForecastConditionTextView);
+				ForecastConditionTextView[x] = (TextView) findViewById(ForecastConditionTextViews[x]);
 				ForecastConditionTextView[x].setText(wo.wfc.get(x).getCondition());
 				
-				ForecastHLTextView[x] = (TextView) findViewById(R.id.ForecastHLTextView);
+				ForecastHLTextView[x] = (TextView) findViewById(ForecastHLTextViews[x]);
 				ForecastHLTextView[x].setText("L:" + wo.wfc.get(x).getLow() + " H:" + wo.wfc.get(x).getHigh());
 			}
 		}

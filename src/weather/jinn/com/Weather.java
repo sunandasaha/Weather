@@ -17,8 +17,12 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -58,6 +62,27 @@ public class Weather extends Activity {
         R.id.ForecastHLTextView3
     };
     
+ // Acquire a reference to the system Location Manager
+    LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+    // Define a listener that responds to location updates
+    LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+          // Called when a new location is found by the network location provider.
+          makeUseOfNewLocation(location);
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+        public void onProviderEnabled(String provider) {}
+
+        public void onProviderDisabled(String provider) {}
+      };
+
+    // Register the listener with the Location Manager to receive location updates
+    // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+    // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+      
     Date date = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("E");
     
@@ -76,8 +101,9 @@ public class Weather extends Activity {
 
 			/** Send URL to parse XML Tags */
 			// URL rssWeather = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
+			URL rssWeatherSrcURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
 			URL sourceUrl = new URL(
-					"http://www.google.com/ig/api?weather=02130");
+					"http://www.google.com/ig/api?weather=02806");
 
 			/** Create handler to handle XML Tags ( extends DefaultHandler ) */
 			xr.setContentHandler(myXMLHandler);
@@ -132,7 +158,6 @@ public class Weather extends Activity {
 			TextView ForecastConditionTextView[] = new TextView[4];
 			TextView ForecastHLTextView[] = new TextView[4];			
 			for (int x = 0; x < wo.wfc.size(); x++){
-			// for (int x = 0; x < 1; x++){
 				try {
 					ForecastIconImageViewURL = new URL ("http://www.google.com" + wo.wfc.get(x).getIconImgPath());
 				} catch (MalformedURLException e) {
@@ -150,7 +175,7 @@ public class Weather extends Activity {
 				ForecastConditionTextView[x].setText(wo.wfc.get(x).getCondition());
 				
 				ForecastHLTextView[x] = (TextView) findViewById(ForecastHLTextViews[x]);
-				ForecastHLTextView[x].setText("L:" + wo.wfc.get(x).getLow() + " H:" + wo.wfc.get(x).getHigh());
+				ForecastHLTextView[x].setText("L:" + wo.wfc.get(x).getLow() + "°F H:" + wo.wfc.get(x).getHigh() + "°F");
 			}
 		}
 		else{

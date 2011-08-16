@@ -3,94 +3,31 @@ package weather.jinn.com;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RSSWeatherObject {
-	private String location_String = "02130";
-	
-	// Forecast Information
-	public String city, postal_code, unit_system;
-	public double latitude, longitude;
-	public Date forecast_date, current_date_time;
-	
-	// Current Conditions
-	public String condition_data, humidity, icon, wind_condition;
-	public int temp_f, temp_c;;
-	
-	// Forecast Conditions array
-	public ArrayList<WeatherForecastCond> wfc = new ArrayList<WeatherForecastCond>(4);
-	
+public class RSSWeatherObject {  
+	public String description, temperature, humidity, wind_speed, wind_direction, 
+	barometer, dewpoint, heat_index, wind_chill, visibility, sunrise, sunset;
+
+	public ArrayList<WeatherForecast> wf = new ArrayList<WeatherForecast>(4);
+
+	public ArrayList<WeatherHourlyForecast> whf = new ArrayList<WeatherHourlyForecast>(4);
+
 	// constructors
 	RSSWeatherObject(){};
 
-	public String getLocation_String() {
-		return location_String;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setLocation_String(String location_String) {
-		this.location_String = location_String;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getCity() {
-		return city;
+	public String getTemperature() {
+		return temperature;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getPostal_code() {
-		return postal_code;
-	}
-
-	public void setPostal_code(String postal_code) {
-		this.postal_code = postal_code;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public Date getForecast_date() {
-		return forecast_date;
-	}
-
-	public void setForecast_date(Date forecast_date) {
-		this.forecast_date = forecast_date;
-	}
-
-	public Date getCurrent_date_time() {
-		return current_date_time;
-	}
-
-	public void setCurrent_date_time(Date current_date_time) {
-		this.current_date_time = current_date_time;
-	}
-
-	public String getUnit_system() {
-		return unit_system;
-	}
-
-	public void setUnit_system(String unit_system) {
-		this.unit_system = unit_system;
-	}
-
-	public String getCondition_data() {
-		return condition_data;
-	}
-
-	public void setCondition_data(String condition_data) {
-		this.condition_data = condition_data;
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
 	}
 
 	public String getHumidity() {
@@ -101,35 +38,91 @@ public class RSSWeatherObject {
 		this.humidity = humidity;
 	}
 
-	public String getIcon() {
-		return icon;
+	public String getWind_speed() {
+		return wind_speed;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
+	public void setWind_speed(String wind_speed) {
+		this.wind_speed = wind_speed;
 	}
 
-	public String getWind_condition() {
-		return wind_condition;
+	public String getWind_direction() {
+		return wind_direction;
 	}
 
-	public void setWind_condition(String wind_condition) {
-		this.wind_condition = wind_condition;
+	public void setWind_direction(String wind_direction) {
+		this.wind_direction = wind_direction;
 	}
 
-	public int getTemp_f() {
-		return temp_f;
+	public String getBarometer() {
+		return barometer;
 	}
 
-	public void setTemp_f(int temp_f) {
-		this.temp_f = temp_f;
+	public void setBarometer(String barometer) {
+		this.barometer = barometer;
 	}
 
-	public int getTemp_c() {
-		return temp_c;
+	public String getDewpoint() {
+		return dewpoint;
 	}
 
-	public void setTemp_c(int temp_c) {
-		this.temp_c = temp_c;
+	public void setDewpoint(String dewpoint) {
+		this.dewpoint = dewpoint;
+	}
+
+	public String getHeat_index() {
+		return heat_index;
+	}
+
+	public void setHeat_index(String heat_index) {
+		this.heat_index = heat_index;
+	}
+
+	public String getWind_chill() {
+		return wind_chill;
+	}
+
+	public void setWind_chill(String wind_chill) {
+		this.wind_chill = wind_chill;
+	}
+
+	public String getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(String visibility) {
+		this.visibility = visibility;
+	}
+
+	public String getSunrise() {
+		return sunrise;
+	}
+
+	public void setSunrise(String sunrise) {
+		this.sunrise = sunrise;
+	}
+
+	public String getSunset() {
+		return sunset;
+	}
+
+	public void setSunset(String sunset) {
+		this.sunset = sunset;
+	}
+
+	public ArrayList<WeatherForecast> getWf() {
+		return wf;
+	}
+
+	public void setWf(ArrayList<WeatherForecast> wf) {
+		this.wf = wf;
+	}
+
+	public ArrayList<WeatherHourlyForecast> getWhf() {
+		return whf;
+	}
+
+	public void setWhf(ArrayList<WeatherHourlyForecast> whf) {
+		this.whf = whf;
 	}
 }

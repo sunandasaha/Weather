@@ -3,16 +3,21 @@ package weather.jinn.com;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.developerworks.android.FeedParser;
+import org.developerworks.android.FeedParserFactory;
+import org.developerworks.android.Message;
+import org.developerworks.android.ParserType;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -25,13 +30,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
 
 public class Weather extends Activity {
     /** Called when the activity is first created. */
 	
-	WeatherObject wo = new WeatherObject();
+	RSSWeatherObject wo = new RSSWeatherObject();
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
     
     private static final int[] ForecastIconImageViews = {
@@ -91,7 +95,7 @@ public class Weather extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-		XMLHandler myXMLHandler = new XMLHandler();
+		RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler();
         
 		try {
 			/** Handling XML */
@@ -107,17 +111,15 @@ public class Weather extends Activity {
 
 			/** Create handler to handle XML Tags ( extends DefaultHandler ) */
 			xr.setContentHandler(myXMLHandler);
-			xr.parse(new InputSource(sourceUrl.openStream()));
+			xr.parse(new InputSource(rssWeatherSrcURL.openStream()));
 		} catch (Exception e) {
 			Log.v("WeatherAPP", "XML Parsing Exception = " + e);
 		}
 		
-		wo = myXMLHandler.getWeatherObject();
-		
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
 		if (wo != null) {
 			// setTxt
-			TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, TempFCTextView,
+			/*TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, TempFCTextView,
 				HumidityTextView, WindTextView;
 			ImageView ConditionIconImageView;
 
@@ -176,7 +178,7 @@ public class Weather extends Activity {
 				
 				ForecastHLTextView[x] = (TextView) findViewById(ForecastHLTextViews[x]);
 				ForecastHLTextView[x].setText("L:" + wo.wfc.get(x).getLow() + "°F H:" + wo.wfc.get(x).getHigh() + "°F");
-			}
+			}*/
 		}
 		else{
 			Log.v("WeatherAPP", "wo empty again...");
@@ -197,5 +199,27 @@ public class Weather extends Activity {
            Log.e("WeatherAPP", "Error getting bitmap", e); 
        } 
        return bm; 
+    }
+	
+	private List<Message> loadFeedtoMessages(String feedURL){
+		
+    	try{
+	    	FeedParser parser = FeedParserFactory.getParser(feedURL);
+	    	long start = System.currentTimeMillis();
+	    	messages = parser.parse();
+	    	long duration = System.currentTimeMillis() - start;
+	    	Log.i("AndroidNews", "Parser duration=" + duration);
+	    	String xml = writeXml();
+	    	Log.i("AndroidNews", xml);
+	    	List<String> titles = new ArrayList<String>(messages.size());
+	    	for (Message msg : messages){
+	    		titles.add(msg.getTitle());
+	    	}
+	    	ArrayAdapter<String> adapter = 
+	    		new ArrayAdapter<String>(this, R.layout.row,titles);
+	    	this.setListAdapter(adapter);
+    	} catch (Throwable t){
+    		Log.e("AndroidNews",t.getMessage(),t);
+    	}
     }
 }

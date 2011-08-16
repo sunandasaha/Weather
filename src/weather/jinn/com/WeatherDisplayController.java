@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 
 public class WeatherDisplayController {
-	public static void updateDisplay(WeatherObject wo){
+	public static void updateDisplay(RSSWeatherObject wo){
 		/*TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, HighLowTextView, 
 			HumidityTextView, WindTextView;
 		ImageView ConditionIconImageView; 

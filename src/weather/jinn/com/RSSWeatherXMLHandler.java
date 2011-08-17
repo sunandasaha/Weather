@@ -13,10 +13,13 @@ import android.sax.RootElement;
 import android.util.Xml;
 
 public class RSSWeatherXMLHandler extends BaseFeedParser  {
+	
 	public RSSWeatherXMLHandler(String feedUrl) {
 		super(feedUrl);
 	}
-
+	
+	
+	
 	@Override
 	public List<Message> parse() {
 		final Message currentMessage = new Message();

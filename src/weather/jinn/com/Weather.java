@@ -11,15 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.developerworks.android.FeedParser;
 import org.developerworks.android.FeedParserFactory;
 import org.developerworks.android.Message;
-import org.developerworks.android.ParserType;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,6 +30,8 @@ public class Weather extends Activity {
     /** Called when the activity is first created. */
 	
 	RSSWeatherObject wo = new RSSWeatherObject();
+	public String location_String;
+	
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
     
     private static final int[] ForecastIconImageViews = {
@@ -66,54 +62,58 @@ public class Weather extends Activity {
         R.id.ForecastHLTextView3
     };
     
- // Acquire a reference to the system Location Manager
-    LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-    // Define a listener that responds to location updates
-    LocationListener locationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-          // Called when a new location is found by the network location provider.
-          makeUseOfNewLocation(location);
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-        public void onProviderEnabled(String provider) {}
-
-        public void onProviderDisabled(String provider) {}
-      };
-
-    // Register the listener with the Location Manager to receive location updates
-    // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-    // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-      
-    Date date = new Date();
-    SimpleDateFormat sdf = new SimpleDateFormat("E");
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+              // Called when a new location is found by the network location provider.
+              // makeUseOfNewLocation(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+          };
+
+        // Register the listener with the Location Manager to receive location updates
+        // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         
-		RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler();
+        location_String = "02130";
+          
+		// URL rssWeather = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
+		String feedURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
+		// String sourceUrl = "http://www.google.com/ig/api?weather=02806";
+		RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler(feedURL);
+		List<Message> myMessageList;
+		
+		// later on pull input from location provider or text
+		location_String = "02130";
         
 		try {
 			/** Handling XML */
-			SAXParserFactory spf = SAXParserFactory.newInstance();
-			SAXParser sp = spf.newSAXParser();
-			XMLReader xr = sp.getXMLReader();
-
 			/** Send URL to parse XML Tags */
-			// URL rssWeather = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
-			URL rssWeatherSrcURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
-			URL sourceUrl = new URL(
-					"http://www.google.com/ig/api?weather=02806");
-
-			/** Create handler to handle XML Tags ( extends DefaultHandler ) */
-			xr.setContentHandler(myXMLHandler);
-			xr.parse(new InputSource(rssWeatherSrcURL.openStream()));
+	    	FeedParser parser = FeedParserFactory.getParser(feedURL);
+	    	Log.i("WeatherAPP", "Feed URL=" + feedURL);
+	    	long start = System.currentTimeMillis();
+	    	myMessageList = parser.parse();
+	    	long duration = System.currentTimeMillis() - start;
+	    	Log.i("WeatherAPP", "Parser duration=" + duration);
 		} catch (Exception e) {
 			Log.v("WeatherAPP", "XML Parsing Exception = " + e);
+		}
+		
+		for (int x = 0; x < myMessageList.length(); x++){
+			myMessageList.
 		}
 		
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
@@ -199,27 +199,5 @@ public class Weather extends Activity {
            Log.e("WeatherAPP", "Error getting bitmap", e); 
        } 
        return bm; 
-    }
-	
-	private List<Message> loadFeedtoMessages(String feedURL){
-		
-    	try{
-	    	FeedParser parser = FeedParserFactory.getParser(feedURL);
-	    	long start = System.currentTimeMillis();
-	    	messages = parser.parse();
-	    	long duration = System.currentTimeMillis() - start;
-	    	Log.i("AndroidNews", "Parser duration=" + duration);
-	    	String xml = writeXml();
-	    	Log.i("AndroidNews", xml);
-	    	List<String> titles = new ArrayList<String>(messages.size());
-	    	for (Message msg : messages){
-	    		titles.add(msg.getTitle());
-	    	}
-	    	ArrayAdapter<String> adapter = 
-	    		new ArrayAdapter<String>(this, R.layout.row,titles);
-	    	this.setListAdapter(adapter);
-    	} catch (Throwable t){
-    		Log.e("AndroidNews",t.getMessage(),t);
-    	}
     }
 }

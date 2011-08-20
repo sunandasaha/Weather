@@ -6,14 +6,15 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.developerworks.android.FeedParser;
 import org.developerworks.android.FeedParserFactory;
 import org.developerworks.android.Message;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,13 +25,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 public class Weather extends Activity {
     /** Called when the activity is first created. */
 	
 	RSSWeatherObject wo = new RSSWeatherObject();
+	List<Message> myMessageList;
 	public String location_String;
+	
+	HtmlCleaner cleaner = new HtmlCleaner();
 	
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
     
@@ -94,7 +97,6 @@ public class Weather extends Activity {
 		String feedURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
 		// String sourceUrl = "http://www.google.com/ig/api?weather=02806";
 		RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler(feedURL);
-		List<Message> myMessageList;
 		
 		// later on pull input from location provider or text
 		location_String = "02130";
@@ -112,8 +114,41 @@ public class Weather extends Activity {
 			Log.v("WeatherAPP", "XML Parsing Exception = " + e);
 		}
 		
-		for (int x = 0; x < myMessageList.length(); x++){
-			myMessageList.
+		
+		for (Message msg: myMessageList){
+			// check category info to see how to process the information
+			if (msg.getCategory() == "current conditions"){
+				// pick apart the content field from wo
+				TagNode node = cleaner.clean(msg.getContent());
+
+				wo.setTemperature(node.findElementByAttValue("class", "temp", false, true).getText().toString());
+				wo.setDescription(node.findElementByAttValue("class", "sky", false, true).getText().toString());
+				wo.setHumidity(node.findElementByAttValue("id", "humidity", false, true).getText().toString());
+				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", false, true).getText().toString());
+				wo.setWind_direction(node.findElementByAttValue("id", "winddir", false, true).getText().toString());
+				wo.setWind_speed(node.findElementByAttValue("id", "gusts", false, true).getText().toString());
+				wo.setBarometer(node.findElementByAttValue("id", "pressure", false, true).getText().toString());
+				wo.setDewpoint(node.findElementByAttValue("id", "dewpoint", false, true).getText().toString());
+				wo.setHeat_index(node.findElementByAttValue("id", "heatindex", false, true).getText().toString());
+				wo.setWind_chill(node.findElementByAttValue("id", "windchill", false, true).getText().toString());
+				wo.setVisibility(node.findElementByAttValue("id", "visibility", false, true).getText().toString());
+			}
+			else if (msg.getCategory() == "forecast conditions"){
+				WeatherForecast wf = new WeatherForecast(); 
+				String[] descriptionArray; 
+				String temp_pattern, wind_pattern, 
+					becoming_wind_pattern, rain_chance_pattern;
+
+				temp_pattern = "";
+				wind_pattern = " \\in the\\ "; 
+				becoming_wind_pattern = "\\becoming\\ \\in the\\";
+				rain_chance_pattern = "\\Chance of rain\\ \\percent\\";
+				descriptionArray = msg.getDescription().split(".");
+				for (String s : descriptionArray){
+					
+				}
+				
+			}
 		}
 		
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()

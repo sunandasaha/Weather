@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.developerworks.android.FeedParser;
 import org.developerworks.android.FeedParserFactory;
@@ -25,6 +25,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Weather extends Activity {
     /** Called when the activity is first created. */
@@ -145,37 +147,57 @@ public class Weather extends Activity {
 				rain_chance_pattern = "\\Chance of rain\\ \\percent\\";
 				descriptionArray = msg.getDescription().split(".");
 				for (String s : descriptionArray){
-					
+					if (s.matches(wind_pattern)){
+						wf.setCurrentWind(s);
+					}
+					else if (s.matches(becoming_wind_pattern)){
+						wf.setFutureWind(s);
+					}
+					else if (s.matches(rain_chance_pattern)){
+						wf.setRain_chance(s);
+					}
 				}
-				
+				wo.wf.add(wf);
 			}
 		}
+		
+		/*
+		 * Temp/Description
+		 * Humidity/Barometer
+		 * Dewpoint
+		 * Wind Speed/Direction
+		 * Wind CHill/Heat Index
+		 * Visibility
+		 */
 		
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
 		if (wo != null) {
 			// setTxt
-			/*TextView LocationTextView, CurrentDateTimeTextView, ConditionTextView, TempFCTextView,
-				HumidityTextView, WindTextView;
+			TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
+			 	WindChillHeatIndxTextView, VisibilityTextView;
 			ImageView ConditionIconImageView;
 
 			SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
 			
-			LocationTextView = (TextView) findViewById(R.id.LocationTextView);
-			LocationTextView.setText((CharSequence)wo.getCity());
+			TempDescTextView = (TextView) findViewById(R.id.TempDescTextView);
+			TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
 			
-			CurrentDateTimeTextView = (TextView) findViewById(R.id.CurrentDateTimeTextView);
-			CurrentDateTimeTextView.setText((CharSequence)CurrentDateTimeDisplayFormat.format(wo.getCurrent_date_time()));
+			HumidBaroTextView = (TextView) findViewById(R.id.HumidBaroTextView);
+			HumidBaroTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
 			
-			ConditionTextView = (TextView) findViewById(R.id.ConditionTextView);
-			ConditionTextView.setText((CharSequence)wo.getCondition_data());
+			DewpointTextView = (TextView) findViewById(R.id.DewpointTextView);
+			DewpointTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
 			
-			TempFCTextView = (TextView) findViewById(R.id.TempFCTextView);
-			TempFCTextView.setText(Integer.toString(wo.getTemp_f())+ "°F" + "/" + Integer.toString(wo.getTemp_c())+ "°C");
+			WindSpdDirTextView = (TextView) findViewById(R.id.WindSpdDirTextView);
+			WindSpdDirTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
 			
-			HumidityTextView = (TextView) findViewById(R.id.HumidityTextView);
-			HumidityTextView.setText((CharSequence)wo.getHumidity());
-	
-			URL ConditionIconImageViewURL = null;
+			WindChillHeatIndxTextView = (TextView) findViewById(R.id.WindChillHeatIndxTextView);
+			WindChillHeatIndxTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+			
+			VisibilityTextView = (TextView) findViewById(R.id.VisibilityTextView);
+			VisibilityTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());	
+			
+			/* URL ConditionIconImageViewURL = null;
 			try {
 				ConditionIconImageViewURL = new URL("http://www.google.com" + wo.getIcon());
 			} catch (MalformedURLException e) {

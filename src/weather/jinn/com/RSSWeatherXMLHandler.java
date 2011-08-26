@@ -10,6 +10,7 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.util.Log;
 import android.util.Xml;
 
 public class RSSWeatherXMLHandler extends BaseFeedParser  {
@@ -17,8 +18,6 @@ public class RSSWeatherXMLHandler extends BaseFeedParser  {
 	public RSSWeatherXMLHandler(String feedUrl) {
 		super(feedUrl);
 	}
-	
-	
 	
 	@Override
 	public List<Message> parse() {
@@ -60,11 +59,11 @@ public class RSSWeatherXMLHandler extends BaseFeedParser  {
 		item.getChild(CONTENT).setEndTextElementListener(new EndTextElementListener(){
 			@Override
 			public void end(String body) {
+				Log.i("WeatherAPP", "Content set");
+				Log.i("WeatherAPP", body);
 				currentMessage.setContent(body);
 			}
 		});
-
-
 		item.getChild(PUB_DATE).setEndTextElementListener(new EndTextElementListener(){
 			@Override
 			public void end(String body) {

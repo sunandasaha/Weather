@@ -39,7 +39,7 @@ public class Weather extends Activity {
 	
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
     
-    private static final int[] ForecastIconImageViews = {
+    /*private static final int[] ForecastIconImageViews = {
         R.id.ForecastIconImageView0,
         R.id.ForecastIconImageView1,
         R.id.ForecastIconImageView2,
@@ -65,7 +65,7 @@ public class Weather extends Activity {
         R.id.ForecastHLTextView1,
         R.id.ForecastHLTextView2,
         R.id.ForecastHLTextView3
-    };
+    };*/
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,9 +93,8 @@ public class Weather extends Activity {
         // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         
+        // hard coded for now
         location_String = "02130";
-          
-		// URL rssWeather = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
 		String feedURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
 		// String sourceUrl = "http://www.google.com/ig/api?weather=02806";
 		RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler(feedURL);
@@ -116,15 +115,19 @@ public class Weather extends Activity {
 			Log.v("WeatherAPP", "XML Parsing Exception = " + e);
 		}
 		
-		
+		Log.i("WeatherAPP", myMessageList.toString());
 		for (Message msg: myMessageList){
 			// check category info to see how to process the information
 			if (msg.getCategory() == "current conditions"){
 				// pick apart the content field from wo
+				Log.i("WeatherAPP", msg.getContent()); 
 				TagNode node = cleaner.clean(msg.getContent());
+				
+				Log.i("WeatherAPP", node.toString()); 
 
 				wo.setTemperature(node.findElementByAttValue("class", "temp", false, true).getText().toString());
 				wo.setDescription(node.findElementByAttValue("class", "sky", false, true).getText().toString());
+				
 				wo.setHumidity(node.findElementByAttValue("id", "humidity", false, true).getText().toString());
 				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", false, true).getText().toString());
 				wo.setWind_direction(node.findElementByAttValue("id", "winddir", false, true).getText().toString());
@@ -143,7 +146,7 @@ public class Weather extends Activity {
 
 				temp_pattern = "";
 				wind_pattern = " \\in the\\ "; 
-				becoming_wind_pattern = "\\becoming\\ \\in the\\";
+				becoming_wind_pattern = "\\becoming\\ \\mph in the\\";
 				rain_chance_pattern = "\\Chance of rain\\ \\percent\\";
 				descriptionArray = msg.getDescription().split(".");
 				for (String s : descriptionArray){
@@ -161,15 +164,6 @@ public class Weather extends Activity {
 			}
 		}
 		
-		/*
-		 * Temp/Description
-		 * Humidity/Barometer
-		 * Dewpoint
-		 * Wind Speed/Direction
-		 * Wind CHill/Heat Index
-		 * Visibility
-		 */
-		
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
 		if (wo != null) {
 			// setTxt
@@ -183,19 +177,19 @@ public class Weather extends Activity {
 			TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
 			
 			HumidBaroTextView = (TextView) findViewById(R.id.HumidBaroTextView);
-			HumidBaroTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+			HumidBaroTextView.setText((CharSequence)wo.getHumidity() + " " + wo.getBarometer());
 			
 			DewpointTextView = (TextView) findViewById(R.id.DewpointTextView);
-			DewpointTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+			DewpointTextView.setText((CharSequence)wo.getDewpoint());
 			
 			WindSpdDirTextView = (TextView) findViewById(R.id.WindSpdDirTextView);
-			WindSpdDirTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+			WindSpdDirTextView.setText((CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
 			
 			WindChillHeatIndxTextView = (TextView) findViewById(R.id.WindChillHeatIndxTextView);
-			WindChillHeatIndxTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+			WindChillHeatIndxTextView.setText((CharSequence)wo.getWind_chill() + " " + wo.getHeat_index());
 			
 			VisibilityTextView = (TextView) findViewById(R.id.VisibilityTextView);
-			VisibilityTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());	
+			VisibilityTextView.setText((CharSequence)wo.getVisibility());
 			
 			/* URL ConditionIconImageViewURL = null;
 			try {

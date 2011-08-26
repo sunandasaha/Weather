@@ -81,6 +81,8 @@ public class Message implements Comparable<Message>{
 		copy.link = link;
 		copy.description = description;
 		copy.date = date;
+		copy.content = content;
+		copy.category = category;
 		return copy;
 	}
 	
@@ -95,6 +97,12 @@ public class Message implements Comparable<Message>{
 		sb.append('\n');
 		sb.append("Link: ");
 		sb.append(link);
+		sb.append('\n');
+		sb.append("Content: ");
+		sb.append(content);
+		sb.append('\n');
+		sb.append("Category: ");
+		sb.append(category);
 		sb.append('\n');
 		sb.append("Description: ");
 		sb.append(description);

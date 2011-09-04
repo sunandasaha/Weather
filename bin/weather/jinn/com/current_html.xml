@@ -1,0 +1,249 @@
+
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+ 
+<!-- presentation format of place name --> 
+ 
+  
+ 
+ 
+<!-- end presentation format of place name  --> 
+<!-- work out base url --> 
+                                                                     
+<!-- end working out base url --> 
+    
+ 
+<head> 
+<title> 
+    02130 - Jamaica Plain, Massachusetts  weather forecast
+</title> 
+<link rel="stylesheet" type="text/css" href="http://dssni5kiwicxb.cloudfront.net/css/site-20110101.css"/> 
+<link rel="stylesheet" type="text/css" href="http://dssni5kiwicxb.cloudfront.net/css/wx-20110101.css"/> 
+ 
+ 	<link rel="alternate" type="application/rss+xml" title="02130 - Jamaica Plain, Massachusetts  weather forecast" href="http://www.rssweather.com/zipcode/02130/rss.php" /> 
+	<link rel="canonical" href="http://www.rssweather.com/zipcode/02130/wx.php" /> 
+    <meta name="description" content="Local RSS weather feed for zip 02130.  Current conditions, forecast, weather warnings and radar for Jamaica Plain, Massachusetts and the surrounding area." /> 
+    <meta name= "viewport" content = "width = 320"/> 
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>     
+    <style > 
+        .content { width: 930px; } 
+        </style> 
+        
+        
+<script type="text/javascript"> 
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-283337-1']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>      
+</head> 
+ 
+<body > 
+ 
+<div id="header"> 
+    <div class="content"> 
+        <div class="lhs"> 
+            <h3><a href="http://www.rssweather.com/"><span class="rss">rss</span>Weather.com</a></h3> 
+            <h2>your local weather feed</h2> 
+        </div> 
+        <div class="rhs"> 
+<!--            <form action="http://www.rssweather.com/hw3.php">
+            <fieldset>
+                <input type="text" value="Search by City or Zipcode" class="text" name="pands" onfocus="clearText(this);"/>                 <input type="submit" class="button" value="Go"/>
+            </fieldset>
+            </form> --> 
+			<form action="http://www.google.com/cse" id="cse-search-box"> 
+			  <div> 
+			    <input type="hidden" name="cx" value="partner-pub-7962912484632320:ovnsp9-hplz" /> 
+			    <input type="hidden" name="ie" value="ISO-8859-1" /> 
+			    <input type="text" name="q" size="31" /> 
+			    <input type="submit" name="sa" value="Search" /> 
+			  </div> 
+			</form> 
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>            <p><a href="http://www.rssweather.com/dir/" title="Places from around the world with weather forecasts">Weather Directory</a></p> 
+        </div> 
+    </div> 
+</div> 
+ 
+<!-- END HEADER--> 
+ 
+<script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'> 
+</script> 
+<script type='text/javascript'> 
+GS_googleAddAdSenseService("ca-pub-7962912484632320");
+GS_googleEnableAllServices();
+</script> 
+<script type='text/javascript'> 
+GA_googleAddSlot("ca-pub-7962912484632320", "Bottom_468x60");
+GA_googleAddSlot("ca-pub-7962912484632320", "Square_250x250");
+GA_googleAddSlot("ca-pub-7962912484632320", "Top_468x60");
+</script> 
+<script type='text/javascript'> 
+GA_googleFetchAds();
+</script> 
+ 
+ 
+ 
+ 
+ 
+ 
+<div class="content"> 
+    <div class="lhs" id="weather"> 
+    <h1 class="lhs">Jamaica Plain,  MA  (02130) Weather</h1> 
+ 
+ 
+	<!-- Top_468x60 --> 
+	<script type='text/javascript'> 
+	GA_googleFillSlot("Top_468x60");
+	</script> 
+ 
+         
+ 
+ 
+<!-- > current weather --> 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<div id="current" class="fair"> 
+		<h4>Now</h4> 
+		<div> 
+		<p class="summary">Fair </p><p class="temp">Temperature: 71&deg;F</p> 
+		<dl class="summaryText"> 
+ 			<dt>Humidity:</dt><dd id="humidity">53%</dd> 
+   			 			<dt>Wind Speed:</dt><dd id="windspeed">8 MPH</dd>  			 <dt>Wind Direction:</dt><dd id="winddir">E (90&#176;)</dd> 
+ 
+ <dt>Barometer:</dt><dd id="pressure">    30.11 in.   </dd> 			<dt>Dewpoint:</dt><dd id="dewpoint">53&deg;F</dd> 
+ 			<dt>Heat Index:</dt><dd id="heatindex">71&deg;F</dd> 
+ 			<dt>Wind Chill:</dt><dd id="windchill">71&deg;F</dd> 
+			
+ 
+			<dt>Sunrise:</dt><dd>6:10 AM EDT</dd> 
+			<dt>Sunset:</dt><dd>7:16 PM EDT</dd>			
+		</dl> 
+		
+	<p class="time">Updated: 2:54 PM EDT FRI SEP 2 2011</p> 
+	</div> 
+</div> 
+<!-- < current weather -->        
+        <!-- BEGIN ZONE DATA//--> 
+<div id="zoneSection"> 
+ 
+ 
+<!--  BEGIN ZONE ROWS //--> 
+ 
+ 
+ 	 	<div class="sunny"> 	<h4>This Afternoon</h4> 	<div> 	<p class="summary">Sunny</p> 	<dl> 		<dt class="tHi">High:</dt><dd class="tHi">69 &deg;F</dd>                            </dl>       <p class="summaryText">Sunny. Near steady temperature in the upper 60s. East winds 5 to 10 mph.</p>     </div>     </div> 	 	<div class="pcloudyn"> 	<h4>Tonight</h4> 	<div> 	<p class="summary">Partly Cloudy</p> 	<dl> 		         <dt class="tLo">Low:</dt><dd class="tLo">59&deg;F</dd>                  </dl>       <p class="summaryText">Clear in the evening...Then becoming partly cloudy. Lows in the upper 50s. Southeast winds 5 to 10 mph...Becoming southwest after midnight.</p>     </div>     </div> 	 	<div class="mcloudy"> 	<h4>Saturday</h4> 	<div> 	<p class="summary">Mostly Cloudy</p> 	<dl> 		<dt class="tHi">High:</dt><dd class="tHi">81 &deg;F</dd>                            </dl>       <p class="summaryText">Partly sunny in the morning...Then becoming mostly cloudy. Highs in the lower 80s. Southwest winds 10 to 15 mph.</p>     </div>     </div> 	 	<div class="mcloudyn"> 	<h4>Saturday Night</h4> 	<div> 	<p class="summary">Mostly Cloudy</p> 	<dl> 		         <dt class="tLo">Low:</dt><dd class="tLo">69&deg;F</dd>                  </dl>       <p class="summaryText">Mostly cloudy. Lows in the upper 60s. Southwest winds 5 to 10 mph. Gusts up to 20 mph in the evening.</p>     </div>     </div> 	 	<div class="mcloudyr"> 	<h4>Sunday</h4> 	<div> 	<p class="summary">Chance of Showers</p> 	<dl> 		<dt class="tHi">High:</dt><dd class="tHi">81 &deg;F</dd>                   <dt class="rain">Percentage:</dt> <dd class="rain">30% </dd>         </dl>       <p class="summaryText">Partly sunny with a chance of showers. Humid with highs in the lower 80s. South winds 10 to 15 mph. Chance of rain 30 percent.</p>     </div>     </div> 	 	<div class="mcloudyn"> 	<h4>Sunday Night</h4> 	<div> 	<p class="summary">Mostly Cloudy</p> 	<dl> 		         <dt class="tLo">Low:</dt><dd class="tLo">69&deg;F</dd>                  </dl>       <p class="summaryText">Mostly cloudy. Lows in the upper 60s.</p>     </div>     </div> 
+ 
+<!--  END ZONE ROWS //--> 
+ 
+ 
+<dl class="time"> 
+	<dt>Weather Forecast Issued:</dt> <dd>115 PM EDT FRI SEP 02 2011</dd> 
+<dt>Forecast Expires:</dt><dd>400 PM EDT FRI SEP 02 2011</dd> 
+ 
+</dl> 
+<div class="include">         
+			<p>The current conditions were observed at <a href="http://www.rssweather.com/airport/info/KMQE" title="More information about KMQE">KMQE</a> airport.</p> 
+         
+         
+         
+         
+   
+         and the cities of   Boston,
+  Chelsea,
+  Revere,
+                 Winthrop .</p> 
+</div> 
+<!-- END ZONE DATA //--> 
+</div> 
+ 
+    </div> 
+    <div class="rhs"> 
+<!-- > local_header.html --> 
+<dl class="info"> 
+		<dt>Lat:</dt> 	<dd>42.30N</dd> 	<dt>Long:</dt> 	<dd>71.12W</dd> 
+</dl> 
+<dl class="info"> 
+	<dt>Wx Zone:</dt><dd> MAZ015</dd> 
+    <dt>Currents ICAO:</dt><dd><a href="http://www.rssweather.com/airport/info/KMQE" title="More information about KMQE">KMQE</a></dd> 
+</dl> 
+ 
+<!--  < local_header.html -->        
+<!-- bof nav_state.html--> 
+ 
+<div id="menu"> 
+<h4>More Details</h4> 
+<ul> 
+	<li><a href="http://www.rssweather.com/zipcode/02130/wx.php" class="zoneDay"  title="Weather forecast for Jamaica Plain, Massachusetts">Weather Forecast</a></li> 	<li><a href="http://www.rssweather.com/zipcode/02130/warnings.php" title="Weather warnings and advisories for Jamaica Plain, Massachusetts">Weather Warning</a></li> 	<li><a href="http://www.rssweather.com/zipcode/02130/nowcast.php" title="NowCast for Jamaica Plain, Massachusetts">NowCast</a></li> 	<li><a href="http://www.rssweather.com/zipcode/02130/gfs.php" title="GFS Weather Model for Jamaica Plain, Massachusetts">Hourly Forecast</a></li> 	  	<li><a href="http://www.rssweather.com/zipcode/02130/special.php" title="Special Weather Statement for Jamaica Plain, Massachusetts">Special Weather Statement</a></li> 	<li><a href="http://www.rssweather.com/zipcode/02130/local_base_radar.php" title="Local Base Weather Radar for Jamaica Plain, Massachusetts">Weather Radar</a></li> 	 	
+	<li><a href="http://www.rssweather.com/climate/Massachusetts/index.html" title="Massachusetts climate information">Massachusetts Climate</a></li> 
+	<li><a href="http://astore.amazon.com/rssweather-20">Weather Store</a></li> 
+	</ul> 
+</div> 
+	<div id="rssSubscribe"> 
+		<h4>RSS Feed</h4> 
+		<p><a href="http://www.rssweather.com/zipcode/02130/rss.php" onclick='javascript:urchinTracker("/goal/feed/button")'><img src="http://rssweather.cachefly.net/images/rsslogo2.png" alt="RSS 2.0 Logo" class="rsslogo"/></a>Subscribe to the <a href="http://www.rssweather.com/zipcode/02130/rss.php" onclick='javascript:urchinTracker("/goal/feed/link")'>Jamaica Plain,  MA RSS Weather Feed</a>.</p> 
+		<p>Not sure what RSS is about, find out by reading our "<a href="http://www.rssweather.com/what_is_rss.html">What is RSS?</a>" article.</p> 
+ 
+	</div>		
+ 
+<div id="myWeather"> 
+    <h4>Share</h4> 
+	<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script> 
+  <fb:like></fb:like> 
+<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script> 
+  <a href="http://code.google.com/apis/analytics"
+     data-url="http://code.google.com/apis/analytics"
+     class="twitter-share-button">Tweet</a>  
+<g:plusone></g:plusone></div>		
+		
+		<div id="weatherMap"> 
+			<h4>Weather Maps</h4> 
+			<a href="http://www.rssweather.com/Weather-Maps/North-America/United-States"><img src="http://rssweather.cachefly.net/contours/us_small.png" alt="Current US Temperature Map" title="Current US Temperature Map" /></a> 
+		</div> 
+		
+<!-- Square_250x250 --> 
+<script type='text/javascript'> 
+GA_googleFillSlot("Square_250x250");
+</script> 
+<!-- eof nav_state.html--> 
+        
+    </div> 
+    <div class="advert" id="adFooter"> 
+		<!-- Bottom_468x60 --> 
+		<script type='text/javascript'> 
+		GA_googleFillSlot("Bottom_468x60");
+		</script> 
+ 
+	</div> 
+ 
+</div> 
+<!-- BEGIN FOOTER //--> 
+<div id="footer" > 
+<p><a href="http://www.rssweather.com/About/contact/">Contact Us</a>&nbsp;&copy; 2003 - 2007 <a href="http://www.rssWeather.com/">rssWeather.com</a>, which is powered by <a class="normal" href="http://www.hamweather.com" onclick="javascript:urchinTracker('/outgoing/hamweather_com');">HAMweather</a>.</p> 
+<p>US weather forecasts are public domain and derived from the <a href="http://iwin.nws.noaa.gov">National Weather Service - (IWIN)</a> and the <a class="normal" href="http://weather.noaa.gov" onclick="javascript:urchinTracker('/outgoing/noaa_gov');">National Oceanic Atmospheric Administration (NOAA)</a></p> 
+<p>Canadian weather forecasts are obtained from and are copyright of <a href="http://www.ec.gc.ca/" onclick="javascript:urchinTracker('/outgoing/ec_gc_ca');">Environment Canada</a>.</p> 
+</div> 
+<script type="text/javascript"> 
+function launch(a,b,c,d){var e=open(a,b,c);if(e.opener==null)e.opener=window;e.opener.name=d;return e}function OpenWindow(a,b,c,d){if(b<1){b=500}if(c<1){c=300}if(d==''){d='screenX=125,left=125,screenY=125,top=125,channelmode=0,dependent=0,directories=no,location=no,menubar=no,scrollbars=yes,status=no,toolbar=no,resizable=no,left=0,top=0,screenX=0,screenY=0'}myRemote2=launch(a,"myRemote2","height="+c+",width="+b+","+d,"HAMweather_Popup");return false}function clearText(a){if(a.defaultValue==a.value)a.value=""}
+</script> 
+<script type="text/javascript" src="http://dssni5kiwicxb.cloudfront.net/js/ga-social.js"></script> 
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script> 
+</body> 
+</html> 
+ 
+ 
+ 

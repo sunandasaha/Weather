@@ -5,18 +5,23 @@ import java.util.List;
 
 import org.developerworks.android.BaseFeedParser;
 import org.developerworks.android.Message;
+import org.w3c.dom.CharacterData;
 
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
-import android.util.Log;
 import android.util.Xml;
 
 public class RSSWeatherXMLHandler extends BaseFeedParser  {
 	
 	public RSSWeatherXMLHandler(String feedUrl) {
 		super(feedUrl);
+	}
+	
+	public static String getCharacterDataFromElement(Element e) {
+		CharacterData cd = (CharacterData) e;
+	    return cd.getData();
 	}
 	
 	@Override
@@ -26,6 +31,7 @@ public class RSSWeatherXMLHandler extends BaseFeedParser  {
 		final List<Message> messages = new ArrayList<Message>();
 		Element channel = root.getChild("channel");
 		Element item = channel.getChild(ITEM);
+
 		item.setEndElementListener(new EndElementListener(){
 			@Override
 			public void end() {
@@ -59,9 +65,8 @@ public class RSSWeatherXMLHandler extends BaseFeedParser  {
 		item.getChild(CONTENT).setEndTextElementListener(new EndTextElementListener(){
 			@Override
 			public void end(String body) {
-				Log.i("WeatherAPP", "Content set");
-				Log.i("WeatherAPP", body);
-				currentMessage.setContent(body);
+				// Log.i("Weather", "Content set: " + body.toString());
+				currentMessage.setContent(body.toString());
 			}
 		});
 		item.getChild(PUB_DATE).setEndTextElementListener(new EndTextElementListener(){

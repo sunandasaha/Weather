@@ -3,6 +3,8 @@ package weather.jinn.com;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -10,11 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.developerworks.android.FeedParser;
-import org.developerworks.android.FeedParserFactory;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.developerworks.android.Message;
 import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.TagNode;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 public class Weather extends Activity {
     /** Called when the activity is first created. */
 	
+	String APPNAME = "Weather"; 
 	RSSWeatherObject wo = new RSSWeatherObject();
 	List<Message> myMessageList;
 	public String location_String;
@@ -96,38 +99,57 @@ public class Weather extends Activity {
         // hard coded for now
         location_String = "02130";
 		String feedURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
-		// String sourceUrl = "http://www.google.com/ig/api?weather=02806";
-		RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler(feedURL);
 		
-		// later on pull input from location provider or text
-		location_String = "02130";
-        
-		try {
+		// RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler(feedURL);
+		
+		/* try {
 			/** Handling XML */
 			/** Send URL to parse XML Tags */
-	    	FeedParser parser = FeedParserFactory.getParser(feedURL);
-	    	Log.i("WeatherAPP", "Feed URL=" + feedURL);
+	    	/* FeedParser parser = FeedParserFactory.getParser(feedURL);
 	    	long start = System.currentTimeMillis();
 	    	myMessageList = parser.parse();
 	    	long duration = System.currentTimeMillis() - start;
 	    	Log.i("WeatherAPP", "Parser duration=" + duration);
 		} catch (Exception e) {
 			Log.v("WeatherAPP", "XML Parsing Exception = " + e);
-		}
+		} */ 
 		
-		Log.i("WeatherAPP", myMessageList.toString());
+		URL weatherURL = null;
+		try {
+			weatherURL = new URL("http", "www.rssweather.com", "/zipcode/02130/rss.php");
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		HttpURLConnection urlConnection = null;
+		try {
+			urlConnection = (HttpURLConnection) weatherURL.openConnection();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		try {
+			SAXParser parser = factory.newSAXParser();
+			RSSHandler handler = new RSSHandler();
+			parser.parse(urlConnection.getInputStream(), handler);
+			myMessageList = handler.getMessages();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} 
+		
+		Log.i(APPNAME, myMessageList.toString());
 		for (Message msg: myMessageList){
 			// check category info to see how to process the information
-			if (msg.getCategory() == "current conditions"){
+			if (msg.getCategory().equals("Current Conditions")){
 				// pick apart the content field from wo
-				Log.i("WeatherAPP", msg.getContent()); 
-				TagNode node = cleaner.clean(msg.getContent());
+				String[] descriptionArray = new String[2]; 
 				
-				Log.i("WeatherAPP", node.toString()); 
+				descriptionArray = msg.getDescription().split(" ", 0);
+				wo.setTemperature(descriptionArray[0]);
+				wo.setDescription(descriptionArray[1]);
+				/* TagNode node = cleaner.clean(msg.getContent());
 
-				wo.setTemperature(node.findElementByAttValue("class", "temp", false, true).getText().toString());
-				wo.setDescription(node.findElementByAttValue("class", "sky", false, true).getText().toString());
-				
 				wo.setHumidity(node.findElementByAttValue("id", "humidity", false, true).getText().toString());
 				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", false, true).getText().toString());
 				wo.setWind_direction(node.findElementByAttValue("id", "winddir", false, true).getText().toString());
@@ -136,9 +158,9 @@ public class Weather extends Activity {
 				wo.setDewpoint(node.findElementByAttValue("id", "dewpoint", false, true).getText().toString());
 				wo.setHeat_index(node.findElementByAttValue("id", "heatindex", false, true).getText().toString());
 				wo.setWind_chill(node.findElementByAttValue("id", "windchill", false, true).getText().toString());
-				wo.setVisibility(node.findElementByAttValue("id", "visibility", false, true).getText().toString());
+				wo.setVisibility(node.findElementByAttValue("id", "visibility", false, true).getText().toString()); */
 			}
-			else if (msg.getCategory() == "forecast conditions"){
+			if (msg.getCategory().equals("Forecast Conditions")){
 				WeatherForecast wf = new WeatherForecast(); 
 				String[] descriptionArray; 
 				String temp_pattern, wind_pattern, 

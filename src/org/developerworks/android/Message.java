@@ -10,9 +10,10 @@ public class Message implements Comparable<Message>{
 	static SimpleDateFormat FORMATTER = 
 		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 	private String title;
-	private URL link;
+	// private URL link;
+	private String link;
 	private String description;
-	private Date date;
+	private String date;
 	private String category, content;
 
 	public String getTitle() {
@@ -23,16 +24,20 @@ public class Message implements Comparable<Message>{
 		this.title = title.trim();
 	}
 	// getters and setters omitted for brevity 
-	public URL getLink() {
+	public String getLink() {
 		return link;
 	}
 	
-	public void setLink(String link) {
+	/* public void setLink(String link) {
 		try {
 			this.link = new URL(link);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
+	} */
+	
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public String getDescription() {
@@ -47,7 +52,7 @@ public class Message implements Comparable<Message>{
 		return FORMATTER.format(this.date);
 	}
 
-	public void setDate(String date) {
+	/* public void setDate(String date) {
 		// pad the date if necessary
 		while (!date.endsWith("00")){
 			date += "0";
@@ -57,6 +62,10 @@ public class Message implements Comparable<Message>{
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	} */
+	
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	public String getCategory() {
@@ -93,7 +102,7 @@ public class Message implements Comparable<Message>{
 		sb.append(title);
 		sb.append('\n');
 		sb.append("Date: ");
-		sb.append(this.getDate());
+		sb.append(date);
 		sb.append('\n');
 		sb.append("Link: ");
 		sb.append(link);

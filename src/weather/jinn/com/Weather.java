@@ -11,12 +11,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.developerworks.android.Message;
 import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
 
 import android.app.Activity;
 import android.content.Context;
@@ -98,25 +100,10 @@ public class Weather extends Activity {
         
         // hard coded for now
         location_String = "02130";
-		String feedURL = "http://www.rssweather.com/zipcode/" + location_String + "/rss.php";
-		
-		// RSSWeatherXMLHandler myXMLHandler = new RSSWeatherXMLHandler(feedURL);
-		
-		/* try {
-			/** Handling XML */
-			/** Send URL to parse XML Tags */
-	    	/* FeedParser parser = FeedParserFactory.getParser(feedURL);
-	    	long start = System.currentTimeMillis();
-	    	myMessageList = parser.parse();
-	    	long duration = System.currentTimeMillis() - start;
-	    	Log.i("WeatherAPP", "Parser duration=" + duration);
-		} catch (Exception e) {
-			Log.v("WeatherAPP", "XML Parsing Exception = " + e);
-		} */ 
 		
 		URL weatherURL = null;
 		try {
-			weatherURL = new URL("http", "www.rssweather.com", "/zipcode/02130/rss.php");
+			weatherURL = new URL("http", "www.rssweather.com", "/zipcode/" + location_String + "/rss.php");
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -136,30 +123,53 @@ public class Weather extends Activity {
 			myMessageList = handler.getMessages();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		} 
+		}
 		
-		Log.i(APPNAME, myMessageList.toString());
+		String nodeString = new String();
+		String[] nodeStringArr;
+		
 		for (Message msg: myMessageList){
 			// check category info to see how to process the information
 			if (msg.getCategory().equals("Current Conditions")){
 				// pick apart the content field from wo
-				String[] descriptionArray = new String[2]; 
+				TagNode node = cleaner.clean(msg.getContent());
 				
-				descriptionArray = msg.getDescription().split(" ", 0);
-				wo.setTemperature(descriptionArray[0]);
-				wo.setDescription(descriptionArray[1]);
-				/* TagNode node = cleaner.clean(msg.getContent());
-
-				wo.setHumidity(node.findElementByAttValue("id", "humidity", false, true).getText().toString());
-				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", false, true).getText().toString());
-				wo.setWind_direction(node.findElementByAttValue("id", "winddir", false, true).getText().toString());
-				wo.setWind_speed(node.findElementByAttValue("id", "gusts", false, true).getText().toString());
-				wo.setBarometer(node.findElementByAttValue("id", "pressure", false, true).getText().toString());
-				wo.setDewpoint(node.findElementByAttValue("id", "dewpoint", false, true).getText().toString());
-				wo.setHeat_index(node.findElementByAttValue("id", "heatindex", false, true).getText().toString());
-				wo.setWind_chill(node.findElementByAttValue("id", "windchill", false, true).getText().toString());
-				wo.setVisibility(node.findElementByAttValue("id", "visibility", false, true).getText().toString()); */
+				nodeString = node.getText().toString();
+				
+				nodeString = nodeString.replace("Wind Speed", "WindSpeed");
+				nodeString = nodeString.replace("Wind Direction", "WindDirection");
+				nodeString = nodeString.replace("Heat Index", "HeatIndex");
+				nodeString = nodeString.replace("Wind Chill", "WindChill");
+				
+				nodeString = nodeString.replace("  Barometer", " Barometer");
+				nodeString = nodeString.replace(" MPH", "MPH");
+				nodeString = nodeString.replace(" in.", "in.");
+				nodeString = nodeString.replace(" (", "(");
+				nodeString = nodeString.replace(": ", ":");
+				nodeString = nodeString.replace("&#176;", "°");
+				
+				
+				Log.i(APPNAME, nodeString); 
+				
+				nodeStringArr = nodeString.split(" ");
+				for (int x = 0;  x < nodeStringArr.length; x++){
+					Log.i(APPNAME, x + ": " + nodeStringArr[x]);
+				}
+				
+				wo.setTemperature(nodeStringArr[0].substring(nodeStringArr[0].indexOf(":") + 1));
+				wo.setDescription(nodeStringArr[1].substring(nodeStringArr[1].indexOf(":") + 1));
+				
+				wo.setHumidity(nodeStringArr[2].substring(nodeStringArr[2].indexOf(":") + 1));
+				wo.setWind_speed(nodeStringArr[3].substring(nodeStringArr[3].indexOf(":") + 1));
+				wo.setWind_direction(nodeStringArr[4].substring(nodeStringArr[4].indexOf(":") + 1));
+				wo.setWind_speed(nodeStringArr[5].substring(nodeStringArr[5].indexOf(":") + 1));
+				wo.setBarometer(nodeStringArr[6].substring(nodeStringArr[6].indexOf(":") + 1));
+				wo.setDewpoint(nodeStringArr[7].substring(nodeStringArr[7].indexOf(":") + 1));
+				wo.setHeat_index(nodeStringArr[8].substring(nodeStringArr[8].indexOf(":") + 1));
+				wo.setWind_chill(nodeStringArr[9].substring(nodeStringArr[9].indexOf(":") + 1));
+				wo.setVisibility(nodeStringArr[10].substring(nodeStringArr[10].indexOf(":") + 1));
 			}
+			
 			if (msg.getCategory().equals("Forecast Conditions")){
 				WeatherForecast wf = new WeatherForecast(); 
 				String[] descriptionArray; 
@@ -170,7 +180,9 @@ public class Weather extends Activity {
 				wind_pattern = " \\in the\\ "; 
 				becoming_wind_pattern = "\\becoming\\ \\mph in the\\";
 				rain_chance_pattern = "\\Chance of rain\\ \\percent\\";
+				
 				descriptionArray = msg.getDescription().split(".");
+				
 				for (String s : descriptionArray){
 					if (s.matches(wind_pattern)){
 						wf.setCurrentWind(s);
@@ -189,29 +201,36 @@ public class Weather extends Activity {
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
 		if (wo != null) {
 			// setTxt
+			TextView PubDateTextView, LocationTextView;
 			TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
 			 	WindChillHeatIndxTextView, VisibilityTextView;
 			ImageView ConditionIconImageView;
 
 			SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
 			
-			TempDescTextView = (TextView) findViewById(R.id.TempDescTextView);
+			PubDateTextView = (TextView) findViewById(R.id.PubDateTextView);
+			//PubDateTextView.setText();
+			
+			LocationTextView = (TextView) findViewById(R.id.LocationTextView);
+			//LocationTextView.setText();
+			
+			TempDescTextView = (TextView) findViewById(R.id.ccTempDescTextView);
 			TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
 			
-			HumidBaroTextView = (TextView) findViewById(R.id.HumidBaroTextView);
-			HumidBaroTextView.setText((CharSequence)wo.getHumidity() + " " + wo.getBarometer());
+			HumidBaroTextView = (TextView) findViewById(R.id.ccHumidBaroTextView);
+			HumidBaroTextView.setText("Humidity: " + (CharSequence)wo.getHumidity() + " Pressure: " + wo.getBarometer());
 			
-			DewpointTextView = (TextView) findViewById(R.id.DewpointTextView);
-			DewpointTextView.setText((CharSequence)wo.getDewpoint());
+			DewpointTextView = (TextView) findViewById(R.id.ccDewpointTextView);
+			DewpointTextView.setText("Dewpoint: " + (CharSequence)wo.getDewpoint());
 			
-			WindSpdDirTextView = (TextView) findViewById(R.id.WindSpdDirTextView);
-			WindSpdDirTextView.setText((CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
+			WindSpdDirTextView = (TextView) findViewById(R.id.ccWindSpdDirTextView);
+			WindSpdDirTextView.setText("Wind: " + (CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
 			
-			WindChillHeatIndxTextView = (TextView) findViewById(R.id.WindChillHeatIndxTextView);
-			WindChillHeatIndxTextView.setText((CharSequence)wo.getWind_chill() + " " + wo.getHeat_index());
+			WindChillHeatIndxTextView = (TextView) findViewById(R.id.ccWindChillHeatIndxTextView);
+			WindChillHeatIndxTextView.setText("Wind Chill: " + (CharSequence)wo.getWind_chill() + " Heat Index: " + wo.getHeat_index());
 			
-			VisibilityTextView = (TextView) findViewById(R.id.VisibilityTextView);
-			VisibilityTextView.setText((CharSequence)wo.getVisibility());
+			VisibilityTextView = (TextView) findViewById(R.id.ccVisibilityTextView);
+			VisibilityTextView.setText("Visibility: " + (CharSequence)wo.getVisibility());
 			
 			/* URL ConditionIconImageViewURL = null;
 			try {
@@ -220,18 +239,13 @@ public class Weather extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			ConditionIconImageView = (ImageView) findViewById(R.id.ConditionIconImageView);
-			ConditionIconImageView.setImageBitmap(getImagefromURL(ConditionIconImageViewURL));
-			
-			WindTextView = (TextView) findViewById(R.id.WindTextView);
-			WindTextView.setText((CharSequence)(wo.getWind_condition()));
 			
 			URL ForecastIconImageViewURL = null;
 			
-			ImageView ForecastIconImageView[] = new ImageView[4];
-			TextView ForecastDoWTextView[] = new TextView[4];
-			TextView ForecastConditionTextView[] = new TextView[4];
-			TextView ForecastHLTextView[] = new TextView[4];			
+			ImageView fcIconImageView[] = new ImageView[4];
+			TextView fcDateTextView[] = new TextView[4];
+			TextView fcConditionTextView[] = new TextView[4];
+			TextView fcHLTextView[] = new TextView[4];			
 			for (int x = 0; x < wo.wfc.size(); x++){
 				try {
 					ForecastIconImageViewURL = new URL ("http://www.google.com" + wo.wfc.get(x).getIconImgPath());

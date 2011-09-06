@@ -30,15 +30,16 @@ public class RSSHandler extends DefaultHandler{
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
+		builder.append(new String(ch, start, length));
 		// super.characters(ch, start, length);
 		// builder.append(ch, start, length);
-		String cdata = new String(ch, start, length);		
+		/*String cdata = new String(ch, start, length);		
 
 		if (builder != null) {	
 			for (int i=start; i<start+length; i++) {
 				builder.append(ch[i]);
 		    }
-		}
+		}*/
 	}
 
 	@Override
@@ -54,8 +55,7 @@ public class RSSHandler extends DefaultHandler{
 				currentMessage.setDescription(builder.toString());
 			} else if (localName.equalsIgnoreCase(PUB_DATE)){
 				currentMessage.setDate(builder.toString());
-			} else if (localName.equalsIgnoreCase(CONTENT)){
-				Log.i("Weather", "Content = " + builder.toString()); 
+			} else if (localName.equalsIgnoreCase("encoded")){ 
 				currentMessage.setContent(builder.toString());
 			} else if (localName.equalsIgnoreCase(CATEGORY)){
 				currentMessage.setCategory(builder.toString());				

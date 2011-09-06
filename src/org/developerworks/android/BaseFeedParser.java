@@ -13,7 +13,7 @@ public abstract class BaseFeedParser implements FeedParser {
 	public static final String LINK = "link";
 	public static final String TITLE = "title";
 	public static final String ITEM = "item";
-	public static final String CONTENT = "content";
+	public static final String CONTENT = "encoded";
 	public static final String CATEGORY = "category";
 	
 	private final URL feedUrl;

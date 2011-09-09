@@ -1,25 +1,23 @@
 package weather.jinn.com;
 
 public class WeatherForecast {
-	String description_text, lows, current_wind, future_wind, rain_chance;
+	String title, pubDate, description, temperature, current_wind, future_wind, precip_chance;
 
-	public String getDescription_text() {
-		return description_text;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDescription_text(String description_text) {
-		this.description_text = description_text;
-	}
-
-	public String getLows() {
-		return lows;
-	}
-
-	public void setLows(String lows) {
-		this.lows = lows;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getCurrentWind() {
 		return current_wind;
 	}
@@ -28,7 +26,6 @@ public class WeatherForecast {
 		this.current_wind = current_wind;
 	}
 	
-
 	public String getFutureWind() {
 		return future_wind;
 	}
@@ -36,14 +33,20 @@ public class WeatherForecast {
 	public void setFutureWind(String future_wind) {
 		this.future_wind = future_wind;
 	}
-	
-	
-	public String getRain_chance() {
-		return rain_chance;
+
+	public String getTemperature() {
+		return temperature;
 	}
 
-	public void setRain_chance(String rain_chance) {
-		this.rain_chance = rain_chance;
-	} 
-		
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
+	}
+
+	public String getPrecip_chance() {
+		return precip_chance;
+	}
+
+	public void setPrecip_chance(String precip_chance) {
+		this.precip_chance = precip_chance;
+	}
 }

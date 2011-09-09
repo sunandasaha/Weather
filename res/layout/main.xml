@@ -17,7 +17,7 @@
     </LinearLayout>
     
     <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout0" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<ImageView android:id="@+id/fcIconImageView0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
 		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout0" android:layout_height="wrap_content">
 			<TextView android:id="@+id/fcDateTextView0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"></TextView>
 			<TextView android:id="@+id/fcDescTextView0" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
@@ -27,7 +27,7 @@
 		</LinearLayout>
     </LinearLayout>		
     <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout1" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<ImageView android:id="@+id/fcIconImageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
 		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout1" android:layout_height="wrap_content">
 			<TextView android:id="@+id/fcDateTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"></TextView>
 			<TextView android:id="@+id/fcDescTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
@@ -37,7 +37,7 @@
 		</LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout2" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<ImageView android:id="@+id/fcIconImageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
 			<TextView android:id="@+id/fcDateTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"></TextView>
 			<TextView android:id="@+id/fcDescTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 			<TextView android:id="@+id/fcTempTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
@@ -45,7 +45,7 @@
 			<TextView android:id="@+id/fcPrecipTextView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout3" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<ImageView android:id="@+id/fcIconImageView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
 		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout3" android:layout_height="wrap_content">
 			<TextView android:id="@+id/fcDateTextView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"></TextView>
 			<TextView android:id="@+id/fcDescTextView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
@@ -55,7 +55,7 @@
 		</LinearLayout>
     </LinearLayout>
         <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout4" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<ImageView android:id="@+id/fcIconImageView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
 		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout4" android:layout_height="wrap_content">
 			<TextView android:id="@+id/fcDateTextView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"></TextView>
 			<TextView android:id="@+id/fcDescTextView4" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
@@ -65,7 +65,7 @@
 		</LinearLayout>
     </LinearLayout>
         <LinearLayout android:layout_width="match_parent" android:orientation="horizontal" android:id="@+id/ForecastConditionLinearLayout5" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ForecastIconImageView5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
+		<ImageView android:id="@+id/fcIconImageView5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" ></ImageView>
 		<LinearLayout android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/ForecastConditionTextLinearLayout3" android:layout_height="wrap_content">
 			<TextView android:id="@+id/fcDateTextView5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold"></TextView>
 			<TextView android:id="@+id/fcDescTextView5" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>

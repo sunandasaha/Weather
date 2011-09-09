@@ -27,12 +27,6 @@ public final class R {
         public static final int ForecastConditionTextLinearLayout1=0x7f050016;
         public static final int ForecastConditionTextLinearLayout3=0x7f050025;
         public static final int ForecastConditionTextLinearLayout4=0x7f05002d;
-        public static final int ForecastIconImageView0=0x7f05000d;
-        public static final int ForecastIconImageView1=0x7f050015;
-        public static final int ForecastIconImageView2=0x7f05001d;
-        public static final int ForecastIconImageView3=0x7f050024;
-        public static final int ForecastIconImageView4=0x7f05002c;
-        public static final int ForecastIconImageView5=0x7f050034;
         public static final int LocationLinearLayout=0x7f050000;
         public static final int LocationTextView=0x7f050002;
         public static final int PubDateTextView=0x7f050001;
@@ -54,6 +48,12 @@ public final class R {
         public static final int fcDescTextView3=0x7f050027;
         public static final int fcDescTextView4=0x7f05002f;
         public static final int fcDescTextView5=0x7f050036;
+        public static final int fcIconImageView0=0x7f05000d;
+        public static final int fcIconImageView1=0x7f050015;
+        public static final int fcIconImageView2=0x7f05001d;
+        public static final int fcIconImageView3=0x7f050024;
+        public static final int fcIconImageView4=0x7f05002c;
+        public static final int fcIconImageView5=0x7f050034;
         public static final int fcPrecipTextView0=0x7f050013;
         public static final int fcPrecipTextView1=0x7f05001b;
         public static final int fcPrecipTextView2=0x7f050022;

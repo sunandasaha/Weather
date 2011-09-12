@@ -1,14 +1,14 @@
 package weather.jinn.com;
 
 public class WeatherForecast {
-	String title, pubDate, description, temperature, current_wind, future_wind, precip_chance;
+	String date, description, temperature, wind, precip_chance;
 
-	public String getTitle() {
-		return title;
+	public String getDate() {
+		return date;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	public String getDescription() {
@@ -18,20 +18,13 @@ public class WeatherForecast {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getCurrentWind() {
-		return current_wind;
-	}
-
-	public void setCurrentWind(String current_wind) {
-		this.current_wind = current_wind;
-	}
 	
-	public String getFutureWind() {
-		return future_wind;
+	public String getWind() {
+		return wind;
 	}
 
-	public void setFutureWind(String future_wind) {
-		this.future_wind = future_wind;
+	public void setWind(String wind) {
+		this.wind = wind;
 	}
 
 	public String getTemperature() {

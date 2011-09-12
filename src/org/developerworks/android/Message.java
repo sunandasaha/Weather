@@ -49,7 +49,7 @@ public class Message implements Comparable<Message>{
 	}
 
 	public String getDate() {
-		return FORMATTER.format(this.date);
+		return date;
 	}
 
 	/* public void setDate(String date) {
@@ -115,6 +115,7 @@ public class Message implements Comparable<Message>{
 		sb.append('\n');
 		sb.append("Description: ");
 		sb.append(description);
+		sb.append('\n');
 		return sb.toString();
 	}
 

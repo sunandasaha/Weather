@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class RSSWeatherObject {  
-	public String description, temperature, humidity, wind_speed, wind_direction, 
-	barometer, dewpoint, heat_index, wind_chill, visibility, sunrise, sunset;
+	public String pub_date, location, description, temperature, humidity, wind_speed, 
+		wind_direction, barometer, dewpoint, heat_index, wind_chill, visibility, sunrise, 
+		sunset;
 
 	public ArrayList<WeatherForecast> wf = new ArrayList<WeatherForecast>(4);
 
@@ -14,6 +15,22 @@ public class RSSWeatherObject {
 	// constructors
 	RSSWeatherObject(){};
 
+	public String getPub_date() {
+		return pub_date;
+	}
+
+	public void setPub_date(String pub_date) {
+		this.pub_date = pub_date;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
 	public String getDescription() {
 		return description;
 	}

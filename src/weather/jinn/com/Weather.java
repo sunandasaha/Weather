@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -40,7 +41,6 @@ public class Weather extends Activity {
 	HtmlCleaner cleaner = new HtmlCleaner();
 	CleanerProperties props = cleaner.getProperties();
 	
-
     private static final int[] fcIconImageView = {
         R.id.fcIconImageView0,
         R.id.fcIconImageView1,
@@ -65,7 +65,7 @@ public class Weather extends Activity {
         R.id.fcDescTextView2,
         R.id.fcDescTextView3,
         R.id.fcDescTextView4,
-        R.id.fcDescTextView5,
+        R.id.fcDescTextView5
     };
 
     private static final int[] fcTempTextViews = {
@@ -74,7 +74,7 @@ public class Weather extends Activity {
         R.id.fcTempTextView2,
         R.id.fcTempTextView3,
         R.id.fcTempTextView4,
-        R.id.fcTempTextView5,
+        R.id.fcTempTextView5
     };
     
     private static final int[] fcWindTextViews = {
@@ -153,16 +153,19 @@ public class Weather extends Activity {
 			if (msg.getCategory().equals("Current Conditions")){
 				// pick apart the content field from wo
 
-				props.setPruneTags("dt, img");
-				props.setTranslateSpecialEntities(true);
+				props.setPruneTags("dt");
+				
+				String title = msg.getTitle();
+				// DateFormat df = new DateFormat("");
+				wo.setPub_date(msg.getDate());
+				wo.setLocation(title.substring(0, title.indexOf("Weather")));
 				
 				TagNode node = cleaner.clean(msg.getContent());
 				
 				wo.setTemperature(node.findElementByAttValue("class", "temp", true, false).getText().toString().replaceAll("&#176;", "°"));
 				wo.setDescription(node.findElementByAttValue("class", "sky", true, false).getText().toString());
 				wo.setHumidity(node.findElementByAttValue("id", "humidity", true, false).getText().toString());
-				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", true, false).getText().toString() + 
-						"-" + node.findElementByAttValue("id", "gusts", true, false).getText().toString());
+				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", true, false).getText().toString());
 				wo.setWind_direction(node.findElementByAttValue("id", "winddir", true, false).getText().toString().replaceAll("&#176;", "°"));
 				wo.setBarometer(node.findElementByAttValue("id", "pressure", true, false).getText().toString());
 				wo.setDewpoint(node.findElementByAttValue("id", "dewpoint", true, false).getText().toString().replaceAll("&#176;", "°"));
@@ -173,42 +176,43 @@ public class Weather extends Activity {
 			
 			else if (msg.getCategory().equals("Weather Forecast")){
 				WeatherForecast wf = new WeatherForecast(); 
-				String[] descriptionArray; 
-				String temp_pattern, wind_pattern, 
-					becoming_wind_pattern, rain_chance_pattern;
+				StringTokenizer st = new StringTokenizer(msg.getDescription(), ".");
+				String temp_pattern, wind_pattern, rain_pattern;
+				
+				StringBuilder description = new StringBuilder();
+				StringBuilder wind = new StringBuilder(); 
 
-				wf.setTitle(msg.getTitle());
+				wf.setDate(msg.getTitle());
 				
-				
-				temp_pattern = "";
-				wind_pattern = " \\in the\\ "; 
-				becoming_wind_pattern = "\\becoming\\ d+ \\mph in the\\";
-				rain_chance_pattern = "\\Q Chance of rain\\E d+ \\Qpercent.\\E";
-				
-				descriptionArray = msg.getDescription().split(".");
-				
-				for (String s : descriptionArray){
-					Log.i(APPNAME, s);
-					if (s.matches(wind_pattern)){
-						wf.setCurrentWind(s);
+				temp_pattern = ".*\\d+\\s.*";
+				wind_pattern = "mph"; 
+				rain_pattern = "rain";
+
+				while (st.hasMoreElements()){
+					String tokenizedString = st.nextToken(); 
+					if (tokenizedString.indexOf(wind_pattern) > 0){
+						wind.append(tokenizedString);
+						wind.append(".");
 					}
-					else if (s.matches(becoming_wind_pattern)){
-						wf.setFutureWind(s);
+					else if (tokenizedString.indexOf(rain_pattern) > 0){
+						wf.setPrecip_chance(tokenizedString);
 					}
-					else if (s.matches(rain_chance_pattern)){
-						wf.setPrecip_chance(s);
+					else if (tokenizedString.matches(temp_pattern)){
+						wf.setTemperature(tokenizedString);
 					}
 					else {
-						wf.setDescription(wf.getDescription() + " " + s);
+						description.append(tokenizedString);
+						description.append(".");
 					}
 				}
+				wf.setWind(wind.toString());
+				wf.setDescription(description.toString());
 				wo.wf.add(wf);
 			}
 		}
 		
 		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
 		if (wo != null) {
-			// setTxt
 			TextView PubDateTextView, LocationTextView;
 			TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
 			 	WindChillHeatIndxTextView, VisibilityTextView;
@@ -217,10 +221,10 @@ public class Weather extends Activity {
 			SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
 			
 			PubDateTextView = (TextView) findViewById(R.id.PubDateTextView);
-			//PubDateTextView.setText();
+			PubDateTextView.setText((CharSequence)wo.getPub_date());
 			
 			LocationTextView = (TextView) findViewById(R.id.LocationTextView);
-			//LocationTextView.setText();
+			LocationTextView.setText((CharSequence)wo.getLocation());
 			
 			TempDescTextView = (TextView) findViewById(R.id.ccTempDescTextView);
 			TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
@@ -264,7 +268,7 @@ public class Weather extends Activity {
 				} */
 				
 				fcDateTextView[x] = (TextView) findViewById(fcDateTextViews[x]);
-				fcDateTextView[x].setText(wo.wf.get(x).getTitle());
+				fcDateTextView[x].setText(wo.wf.get(x).getDate());
 				
 				fcDescTextView[x] = (TextView) findViewById(fcDescTextViews[x]);
 				fcDescTextView[x].setText(wo.wf.get(x).getDescription());
@@ -273,7 +277,7 @@ public class Weather extends Activity {
 				fcTempTextView[x].setText(wo.wf.get(x).getTemperature());
 				
 				fcWindTextView[x] = (TextView) findViewById(fcWindTextViews[x]);
-				fcWindTextView[x].setText(wo.wf.get(x).getCurrentWind() + " " + wo.wf.get(x).getFutureWind());
+				fcWindTextView[x].setText(wo.wf.get(x).getWind());
 				
 				fcPrecipTextView[x] = (TextView) findViewById(fcPrecipTextViews[x]);
 				fcPrecipTextView[x].setText(wo.wf.get(x).getPrecip_chance());

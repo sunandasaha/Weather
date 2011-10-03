@@ -18,7 +18,10 @@ import org.developerworks.android.Message;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import android.R.string;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -99,38 +102,20 @@ public class Weather extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        // Acquire a reference to the system Location Manager
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-              // Called when a new location is found by the network location provider.
-              // makeUseOfNewLocation(location);
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
-          };
-
-        // Register the listener with the Location Manager to receive location updates
-        // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         
-        // hard coded for now
-        location_String = "02130";
+        // String zipCodeJSONURL = "http://maps.google.com/maps/geo?ll=" + 37.775,-122.4183333
+        String zipCodeJSONURL = "http://maps.google.com/maps/geo?ll=" + getLocationCoordinates();
+        // locCoordinatesToZipCode
+        String zipCode = "02130";
 		
 		URL weatherURL = null;
 		try {
-			weatherURL = new URL("http", "www.rssweather.com", "/zipcode/" + location_String + "/rss.php");
+			weatherURL = new URL("http", "www.rssweather.com", "/zipcode/" + zipCode + "/rss.php");
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		HttpURLConnection urlConnection = null;
 		try {
 			urlConnection = (HttpURLConnection) weatherURL.openConnection();
@@ -138,6 +123,7 @@ public class Weather extends Activity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser parser = factory.newSAXParser();
@@ -151,141 +137,123 @@ public class Weather extends Activity {
 		for (Message msg: myMessageList){
 			// check category info to see how to process the information
 			if (msg.getCategory().equals("Current Conditions")){
-				// pick apart the content field from wo
-
-				props.setPruneTags("dt");
-				
-				String title = msg.getTitle();
-				// DateFormat df = new DateFormat("");
-				wo.setPub_date(msg.getDate());
-				wo.setLocation(title.substring(0, title.indexOf("Weather")));
-				
-				TagNode node = cleaner.clean(msg.getContent());
-				
-				wo.setTemperature(node.findElementByAttValue("class", "temp", true, false).getText().toString().replaceAll("&#176;", "°"));
-				wo.setDescription(node.findElementByAttValue("class", "sky", true, false).getText().toString());
-				wo.setHumidity(node.findElementByAttValue("id", "humidity", true, false).getText().toString());
-				wo.setWind_speed(node.findElementByAttValue("id", "windspeed", true, false).getText().toString());
-				wo.setWind_direction(node.findElementByAttValue("id", "winddir", true, false).getText().toString().replaceAll("&#176;", "°"));
-				wo.setBarometer(node.findElementByAttValue("id", "pressure", true, false).getText().toString());
-				wo.setDewpoint(node.findElementByAttValue("id", "dewpoint", true, false).getText().toString().replaceAll("&#176;", "°"));
-				wo.setHeat_index(node.findElementByAttValue("id", "heatindex", true, false).getText().toString().replaceAll("&#176;", "°"));
-				wo.setWind_chill(node.findElementByAttValue("id", "windchill", true, false).getText().toString().replaceAll("&#176;", "°"));
-				wo.setVisibility(node.findElementByAttValue("id", "visibility", true, false).getText().toString());
+				processCurrentConditions(msg);
 			}
-			
 			else if (msg.getCategory().equals("Weather Forecast")){
-				WeatherForecast wf = new WeatherForecast(); 
-				StringTokenizer st = new StringTokenizer(msg.getDescription(), ".");
-				String temp_pattern, wind_pattern, rain_pattern;
-				
-				StringBuilder description = new StringBuilder();
-				StringBuilder wind = new StringBuilder(); 
-
-				wf.setDate(msg.getTitle());
-				
-				temp_pattern = ".*\\d+\\s.*";
-				wind_pattern = "mph"; 
-				rain_pattern = "rain";
-
-				while (st.hasMoreElements()){
-					String tokenizedString = st.nextToken(); 
-					if (tokenizedString.indexOf(wind_pattern) > 0){
-						wind.append(tokenizedString);
-						wind.append(".");
-					}
-					else if (tokenizedString.indexOf(rain_pattern) > 0){
-						wf.setPrecip_chance(tokenizedString);
-					}
-					else if (tokenizedString.matches(temp_pattern)){
-						wf.setTemperature(tokenizedString);
-					}
-					else {
-						description.append(tokenizedString);
-						description.append(".");
-					}
-				}
-				wf.setWind(wind.toString());
-				wf.setDescription(description.toString());
-				wo.wf.add(wf);
+				processWeatherForecast(msg);
 			}
 		}
 		
-		// the inside of this needs to be replaced by a function in WeatherDisplayController:updateDisplay()
 		if (wo != null) {
-			TextView PubDateTextView, LocationTextView;
-			TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
-			 	WindChillHeatIndxTextView, VisibilityTextView;
-			ImageView ConditionIconImageView;
-
-			SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
-			
-			PubDateTextView = (TextView) findViewById(R.id.PubDateTextView);
-			PubDateTextView.setText((CharSequence)wo.getPub_date());
-			
-			LocationTextView = (TextView) findViewById(R.id.LocationTextView);
-			LocationTextView.setText((CharSequence)wo.getLocation());
-			
-			TempDescTextView = (TextView) findViewById(R.id.ccTempDescTextView);
-			TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
-			
-			HumidBaroTextView = (TextView) findViewById(R.id.ccHumidBaroTextView);
-			HumidBaroTextView.setText("Humidity: " + (CharSequence)wo.getHumidity() + " Pressure: " + wo.getBarometer());
-			
-			DewpointTextView = (TextView) findViewById(R.id.ccDewpointTextView);
-			DewpointTextView.setText("Dewpoint: " + (CharSequence)wo.getDewpoint());
-			
-			WindSpdDirTextView = (TextView) findViewById(R.id.ccWindSpdDirTextView);
-			WindSpdDirTextView.setText("Wind: " + (CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
-			
-			WindChillHeatIndxTextView = (TextView) findViewById(R.id.ccWindChillHeatIndxTextView);
-			WindChillHeatIndxTextView.setText("Wind Chill: " + (CharSequence)wo.getWind_chill() + " Heat Index: " + wo.getHeat_index());
-			
-			VisibilityTextView = (TextView) findViewById(R.id.ccVisibilityTextView);
-			VisibilityTextView.setText("Visibility: " + (CharSequence)wo.getVisibility());
-			
-			/* URL ConditionIconImageViewURL = null;
-			try {
-				ConditionIconImageViewURL = new URL("http://www.google.com" + wo.getIcon());
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-			
-			ImageView fcIconImageView[] = new ImageView[6];
-			TextView fcDateTextView[] = new TextView[6];
-			TextView fcDescTextView[] = new TextView[6];
-			TextView fcTempTextView[] = new TextView[6];
-			TextView fcWindTextView[] = new TextView[6];
-			TextView fcPrecipTextView[] = new TextView[6];
-			
-			for (int x = 0; x < wo.wf.size(); x++){
-				/* try {
-					ForecastIconImageViewURL = new URL ("http://www.google.com" + wo.wf.get(x).getIconImgPath());
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} */
-				
-				fcDateTextView[x] = (TextView) findViewById(fcDateTextViews[x]);
-				fcDateTextView[x].setText(wo.wf.get(x).getDate());
-				
-				fcDescTextView[x] = (TextView) findViewById(fcDescTextViews[x]);
-				fcDescTextView[x].setText(wo.wf.get(x).getDescription());
-				
-				fcTempTextView[x] = (TextView) findViewById(fcTempTextViews[x]);
-				fcTempTextView[x].setText(wo.wf.get(x).getTemperature());
-				
-				fcWindTextView[x] = (TextView) findViewById(fcWindTextViews[x]);
-				fcWindTextView[x].setText(wo.wf.get(x).getWind());
-				
-				fcPrecipTextView[x] = (TextView) findViewById(fcPrecipTextViews[x]);
-				fcPrecipTextView[x].setText(wo.wf.get(x).getPrecip_chance());
-			}
+			updateDisplay();
 		}
-		else{
+		else {
 			Log.v("WeatherAPP", "wo empty again...");
 		}
+    }
+    
+    public String getLocationCoordinates(){
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+        	public void onLocationChanged(Location location) {
+              // Called when a new location is found by the network location provider.
+              // makeUseOfNewLocation(location);
+        		}
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+            };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        
+        double latitude = lastKnownLocation.getLatitude();
+        double longitude = lastKnownLocation.getLongitude();
+		return latitude + "," + longitude;
+    }
+    
+    public void updateDisplay(){
+		TextView PubDateTextView, LocationTextView;
+		TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
+		 	WindChillHeatIndxTextView, VisibilityTextView;
+		ImageView ConditionIconImageView;
+
+		SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
+		
+		PubDateTextView = (TextView) findViewById(R.id.PubDateTextView);
+		PubDateTextView.setText((CharSequence)wo.getPub_date());
+		
+		LocationTextView = (TextView) findViewById(R.id.LocationTextView);
+		LocationTextView.setText((CharSequence)wo.getLocation());
+		
+		TempDescTextView = (TextView) findViewById(R.id.ccTempDescTextView);
+		TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+		
+		HumidBaroTextView = (TextView) findViewById(R.id.ccHumidBaroTextView);
+		HumidBaroTextView.setText("Humidity: " + (CharSequence)wo.getHumidity() + " Pressure: " + wo.getBarometer());
+		
+		DewpointTextView = (TextView) findViewById(R.id.ccDewpointTextView);
+		DewpointTextView.setText("Dewpoint: " + (CharSequence)wo.getDewpoint());
+		
+		WindSpdDirTextView = (TextView) findViewById(R.id.ccWindSpdDirTextView);
+		WindSpdDirTextView.setText("Wind: " + (CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
+		
+		WindChillHeatIndxTextView = (TextView) findViewById(R.id.ccWindChillHeatIndxTextView);
+		WindChillHeatIndxTextView.setText("Wind Chill: " + (CharSequence)wo.getWind_chill() + " Heat Index: " + wo.getHeat_index());
+		
+		VisibilityTextView = (TextView) findViewById(R.id.ccVisibilityTextView);
+		VisibilityTextView.setText("Visibility: " + (CharSequence)wo.getVisibility());
+		
+		ImageView fcIconImageView[] = new ImageView[6];
+		TextView fcDateTextView[] = new TextView[6];
+		TextView fcDescTextView[] = new TextView[6];
+		TextView fcTempTextView[] = new TextView[6];
+		TextView fcWindTextView[] = new TextView[6];
+		TextView fcPrecipTextView[] = new TextView[6];
+		
+		for (int x = 0; x < wo.wf.size(); x++){
+			fcDateTextView[x] = (TextView) findViewById(fcDateTextViews[x]);
+			fcDateTextView[x].setText(wo.wf.get(x).getDate());
+			
+			fcDescTextView[x] = (TextView) findViewById(fcDescTextViews[x]);
+			fcDescTextView[x].setText(wo.wf.get(x).getDescription());
+			
+			fcTempTextView[x] = (TextView) findViewById(fcTempTextViews[x]);
+			fcTempTextView[x].setText(wo.wf.get(x).getTemperature());
+			
+			fcWindTextView[x] = (TextView) findViewById(fcWindTextViews[x]);
+			fcWindTextView[x].setText(wo.wf.get(x).getWind());
+			
+			fcPrecipTextView[x] = (TextView) findViewById(fcPrecipTextViews[x]);
+			fcPrecipTextView[x].setText(wo.wf.get(x).getPrecip_chance());
+		}
+    }
+    
+    public string getZipCodefromGMaps(string URL){
+    	string zipCode = null;
+    	JSONObject jObject;
+    	string jString = null; 
+
+    	jObject = new JSONObject(); 
+
+    	// JSONArray placemarkArray = jObject.getJSONObject("Placemark");
+
+    	// String attributeId = menuObject.getString("id");
+    	/* if attributeId = 2 {
+
+    	}*/
+    	
+
+    	return zipCode;
     }
     
 	public Bitmap getImagefromURL(URL imageURL){
@@ -303,4 +271,64 @@ public class Weather extends Activity {
        } 
        return bm; 
     }
+	
+	public void processCurrentConditions(Message m){
+		// pick apart the content field from wo
+
+		props.setPruneTags("dt");
+		
+		String title = m.getTitle();
+		
+		wo.setPub_date(m.getDate());
+		wo.setLocation(title.substring(0, title.indexOf("Weather")));
+		
+		TagNode node = cleaner.clean(m.getContent());
+		
+		wo.setTemperature(node.findElementByAttValue("class", "temp", true, false).getText().toString().replaceAll("&#176;", "°"));
+		wo.setDescription(node.findElementByAttValue("class", "sky", true, false).getText().toString());
+		wo.setHumidity(node.findElementByAttValue("id", "humidity", true, false).getText().toString());
+		wo.setWind_speed(node.findElementByAttValue("id", "windspeed", true, false).getText().toString());
+		wo.setWind_direction(node.findElementByAttValue("id", "winddir", true, false).getText().toString().replaceAll("&#176;", "°"));
+		wo.setBarometer(node.findElementByAttValue("id", "pressure", true, false).getText().toString());
+		wo.setDewpoint(node.findElementByAttValue("id", "dewpoint", true, false).getText().toString().replaceAll("&#176;", "°"));
+		wo.setHeat_index(node.findElementByAttValue("id", "heatindex", true, false).getText().toString().replaceAll("&#176;", "°"));
+		wo.setWind_chill(node.findElementByAttValue("id", "windchill", true, false).getText().toString().replaceAll("&#176;", "°"));
+		wo.setVisibility(node.findElementByAttValue("id", "visibility", true, false).getText().toString());
+	}
+	
+	public void processWeatherForecast(Message m){
+		WeatherForecast wf = new WeatherForecast(); 
+		StringTokenizer st = new StringTokenizer(m.getDescription(), ".");
+		String temp_pattern, wind_pattern, rain_pattern;
+		
+		StringBuilder description = new StringBuilder();
+		StringBuilder wind = new StringBuilder(); 
+
+		wf.setDate(m.getTitle());
+		
+		temp_pattern = "[lows|highs] in the";
+		wind_pattern = "mph"; 
+		rain_pattern = "rain";
+
+		while (st.hasMoreElements()){
+			String tokenizedString = st.nextToken(); 
+			if (tokenizedString.indexOf(wind_pattern) > 0){
+				wind.append(tokenizedString);
+				wind.append(".");
+			}
+			else if (tokenizedString.indexOf(rain_pattern) > 0){
+				wf.setPrecip_chance(tokenizedString);
+			}
+			else if (tokenizedString.matches(temp_pattern)){
+				wf.setTemperature(tokenizedString);
+			}
+			else {
+				description.append(tokenizedString);
+				description.append(".");
+			}
+		}
+		wf.setWind(wind.toString());
+		wf.setDescription(description.toString());
+		wo.wf.add(wf);
+	}
 }

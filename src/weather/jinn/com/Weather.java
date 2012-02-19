@@ -18,10 +18,8 @@ import org.developerworks.android.Message;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.R.string;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -145,7 +143,9 @@ public class Weather extends Activity {
 		}
 		
 		if (wo != null) {
-			updateDisplay();
+			updateCurrentWeatherDisplay();
+			updateWeatherForecastDisplay();
+			
 		}
 		else {
 			Log.v("WeatherAPP", "wo empty again...");
@@ -181,67 +181,10 @@ public class Weather extends Activity {
 		return latitude + "," + longitude;
     }
     
-    public void updateDisplay(){
-		TextView PubDateTextView, LocationTextView;
-		TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
-		 	WindChillHeatIndxTextView, VisibilityTextView;
-		ImageView ConditionIconImageView;
-
-		SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
-		
-		PubDateTextView = (TextView) findViewById(R.id.PubDateTextView);
-		PubDateTextView.setText((CharSequence)wo.getPub_date());
-		
-		LocationTextView = (TextView) findViewById(R.id.LocationTextView);
-		LocationTextView.setText((CharSequence)wo.getLocation());
-		
-		TempDescTextView = (TextView) findViewById(R.id.ccTempDescTextView);
-		TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
-		
-		HumidBaroTextView = (TextView) findViewById(R.id.ccHumidBaroTextView);
-		HumidBaroTextView.setText("Humidity: " + (CharSequence)wo.getHumidity() + " Pressure: " + wo.getBarometer());
-		
-		DewpointTextView = (TextView) findViewById(R.id.ccDewpointTextView);
-		DewpointTextView.setText("Dewpoint: " + (CharSequence)wo.getDewpoint());
-		
-		WindSpdDirTextView = (TextView) findViewById(R.id.ccWindSpdDirTextView);
-		WindSpdDirTextView.setText("Wind: " + (CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
-		
-		WindChillHeatIndxTextView = (TextView) findViewById(R.id.ccWindChillHeatIndxTextView);
-		WindChillHeatIndxTextView.setText("Wind Chill: " + (CharSequence)wo.getWind_chill() + " Heat Index: " + wo.getHeat_index());
-		
-		VisibilityTextView = (TextView) findViewById(R.id.ccVisibilityTextView);
-		VisibilityTextView.setText("Visibility: " + (CharSequence)wo.getVisibility());
-		
-		ImageView fcIconImageView[] = new ImageView[6];
-		TextView fcDateTextView[] = new TextView[6];
-		TextView fcDescTextView[] = new TextView[6];
-		TextView fcTempTextView[] = new TextView[6];
-		TextView fcWindTextView[] = new TextView[6];
-		TextView fcPrecipTextView[] = new TextView[6];
-		
-		for (int x = 0; x < wo.wf.size(); x++){
-			fcDateTextView[x] = (TextView) findViewById(fcDateTextViews[x]);
-			fcDateTextView[x].setText(wo.wf.get(x).getDate());
-			
-			fcDescTextView[x] = (TextView) findViewById(fcDescTextViews[x]);
-			fcDescTextView[x].setText(wo.wf.get(x).getDescription());
-			
-			fcTempTextView[x] = (TextView) findViewById(fcTempTextViews[x]);
-			fcTempTextView[x].setText(wo.wf.get(x).getTemperature());
-			
-			fcWindTextView[x] = (TextView) findViewById(fcWindTextViews[x]);
-			fcWindTextView[x].setText(wo.wf.get(x).getWind());
-			
-			fcPrecipTextView[x] = (TextView) findViewById(fcPrecipTextViews[x]);
-			fcPrecipTextView[x].setText(wo.wf.get(x).getPrecip_chance());
-		}
-    }
-    
-    public string getZipCodefromGMaps(string URL){
-    	string zipCode = null;
+    public String getZipCodefromGMaps(String URL){
+    	String zipCode = null;
     	JSONObject jObject;
-    	string jString = null; 
+    	String jString = null; 
 
     	jObject = new JSONObject(); 
 
@@ -252,7 +195,6 @@ public class Weather extends Activity {
 
     	}*/
     	
-
     	return zipCode;
     }
     
@@ -330,5 +272,64 @@ public class Weather extends Activity {
 		wf.setWind(wind.toString());
 		wf.setDescription(description.toString());
 		wo.wf.add(wf);
+	}
+	
+	public void updateCurrentWeatherDisplay(){
+		TextView PubDateTextView, LocationTextView;
+		TextView TempDescTextView, HumidBaroTextView, DewpointTextView, WindSpdDirTextView, 
+		 	WindChillHeatIndxTextView, VisibilityTextView;
+		ImageView ConditionIconImageView;
+
+		SimpleDateFormat CurrentDateTimeDisplayFormat = new SimpleDateFormat("EEEE yyyy-MM-dd HH:mm");
+		
+		PubDateTextView = (TextView) findViewById(R.id.PubDateTextView);
+		PubDateTextView.setText((CharSequence)wo.getPub_date());
+		
+		LocationTextView = (TextView) findViewById(R.id.LocationTextView);
+		LocationTextView.setText((CharSequence)wo.getLocation());
+		
+		TempDescTextView = (TextView) findViewById(R.id.ccTempDescTextView);
+		TempDescTextView.setText((CharSequence)wo.getTemperature() + " " + wo.getDescription());
+		
+		HumidBaroTextView = (TextView) findViewById(R.id.ccHumidBaroTextView);
+		HumidBaroTextView.setText("Humidity: " + (CharSequence)wo.getHumidity() + " Pressure: " + wo.getBarometer());
+		
+		DewpointTextView = (TextView) findViewById(R.id.ccDewpointTextView);
+		DewpointTextView.setText("Dewpoint: " + (CharSequence)wo.getDewpoint());
+		
+		WindSpdDirTextView = (TextView) findViewById(R.id.ccWindSpdDirTextView);
+		WindSpdDirTextView.setText("Wind: " + (CharSequence)wo.getWind_speed() + " " + wo.getWind_direction());
+		
+		WindChillHeatIndxTextView = (TextView) findViewById(R.id.ccWindChillHeatIndxTextView);
+		WindChillHeatIndxTextView.setText("Wind Chill: " + (CharSequence)wo.getWind_chill() + " Heat Index: " + wo.getHeat_index());
+		
+		VisibilityTextView = (TextView) findViewById(R.id.ccVisibilityTextView);
+		VisibilityTextView.setText("Visibility: " + (CharSequence)wo.getVisibility());
+	}
+	
+	public void updateWeatherForecastDisplay(){
+		ImageView fcIconImageView[] = new ImageView[6];
+		TextView fcDateTextView[] = new TextView[6];
+		TextView fcDescTextView[] = new TextView[6];
+		TextView fcTempTextView[] = new TextView[6];
+		TextView fcWindTextView[] = new TextView[6];
+		TextView fcPrecipTextView[] = new TextView[6];
+		
+		for (int x = 0; x < wo.wf.size(); x++){
+			fcDateTextView[x] = (TextView) findViewById(fcDateTextViews[x]);
+			fcDateTextView[x].setText(wo.wf.get(x).getDate());
+			
+			fcDescTextView[x] = (TextView) findViewById(fcDescTextViews[x]);
+			fcDescTextView[x].setText(wo.wf.get(x).getDescription());
+			
+			fcTempTextView[x] = (TextView) findViewById(fcTempTextViews[x]);
+			fcTempTextView[x].setText(wo.wf.get(x).getTemperature());
+			
+			fcWindTextView[x] = (TextView) findViewById(fcWindTextViews[x]);
+			fcWindTextView[x].setText(wo.wf.get(x).getWind());
+			
+			fcPrecipTextView[x] = (TextView) findViewById(fcPrecipTextViews[x]);
+			fcPrecipTextView[x].setText(wo.wf.get(x).getPrecip_chance());
+		}
 	}
 }

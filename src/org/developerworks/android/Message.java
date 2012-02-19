@@ -1,10 +1,6 @@
 package org.developerworks.android;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Message implements Comparable<Message>{
 	static SimpleDateFormat FORMATTER = 

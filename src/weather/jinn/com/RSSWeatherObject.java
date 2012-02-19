@@ -1,7 +1,6 @@
 package weather.jinn.com;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class RSSWeatherObject {  
 	public String pub_date, location, description, temperature, humidity, wind_speed, 

@@ -1,7 +1,6 @@
 package weather.jinn.com;
 
 import static org.developerworks.android.BaseFeedParser.CATEGORY;
-import static org.developerworks.android.BaseFeedParser.CONTENT;
 import static org.developerworks.android.BaseFeedParser.DESCRIPTION;
 import static org.developerworks.android.BaseFeedParser.ITEM;
 import static org.developerworks.android.BaseFeedParser.LINK;
@@ -15,8 +14,6 @@ import org.developerworks.android.Message;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import android.util.Log;
 
 public class RSSHandler extends DefaultHandler{
 	private List<Message> messages;

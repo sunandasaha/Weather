@@ -1,10 +1,10 @@
 package weather.jinn.com;
 
-import java.text.SimpleDateFormat;
+/*import java.text.SimpleDateFormat;
 
 import android.net.Uri;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.TextView;*/
 
 
 public class WeatherDisplayController {
